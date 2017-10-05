@@ -1,0 +1,11 @@
+{
+  "version": "2.0.0",
+  "tasks": [{
+    "taskName": "transpile_typescript",
+    "type": "shell",
+    "command": "gulp build-ts-server",
+    "presentation": {
+      "reveal": "never"
+    }
+  }]
+}

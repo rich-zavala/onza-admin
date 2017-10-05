@@ -77,7 +77,10 @@ export class AccesoComponent {
   form: FormGroup; // Objeto de formulario
   save: any = {}; // Objeto para mostrar los botones
 
-  constructor( @Inject(FormBuilder) fb: FormBuilder, private saveService: RequestService) {
+  constructor(
+    @Inject(FormBuilder) fb: FormBuilder,
+    private reqService: RequestService
+  ) {
     this.form = fb.group({  // Creamos un FormGroup principal. Esto se hace así porque es posible meter varios grupos al mismo tiempo (pero ahora sólo meteremos uno)
       'claves': fb.group({ // Creamos un FormGroup secundario llamado "claves"
         nombre: ['', [Validators.required, Validators.minLength(4)]], // Campo de nombre con dos validaciones: requires y caracteres mínimos de 4
@@ -119,7 +122,7 @@ export class AccesoComponent {
     let error = () => this.showSaveBtn();
     let complete = () => this.save.working = false;
 
-    this.saveService.cambiarAccesos(info, success, error, complete);
+    this.reqService.cambiarAccesos(info, success, error, complete);
 
   }
 

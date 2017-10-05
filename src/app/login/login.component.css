@@ -1,0 +1,32 @@
+.input-container {
+  margin: 15px 0 0px 0;
+  display: block;
+  border: 0px solid;
+  height: 44px;
+}
+
+.ui-float-label input {
+  width: 100%;
+}
+
+.ui-messages-detail {
+  display: none;
+}
+
+.ui-messages-icon.fa-info-circle {
+  -webkit-animation: fa-spin 2s infinite linear;
+  animation: fa-spin 2s infinite linear;
+}
+
+.fa-info-circle:before {
+  content: "\f110";
+}
+
+.show {
+  opacity: 1 !important;
+}
+
+.step {
+  opacity: 0;
+  transition: .8s ease-in-out all;
+}

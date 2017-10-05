@@ -35,7 +35,7 @@ export class PaginasComponent {
   originalValue: string;
   noDelta = true;
 
-  constructor(private saveService: RequestService, private route: ActivatedRoute) {
+  constructor(private reqService: RequestService, private route: ActivatedRoute) {
     route.params.subscribe(params => {
       this.value = null;
       this.seccion = params.seccion;
@@ -51,7 +51,7 @@ export class PaginasComponent {
       this.showSaveBtn();
     };
     let error = () => alert('Ha ocurrido un error. Intente de nuevo más tarde.');
-    this.saveService.obtenerPaginas(success, error, () => null)
+    this.reqService.obtenerPaginas(success, error, () => null)
   }
 
   guardar() {
@@ -68,7 +68,7 @@ export class PaginasComponent {
     let error = () => this.showSaveBtn();
     let complete = () => this.save.working = false;
 
-    this.saveService.guardarPagina(info, success, error, complete);
+    this.reqService.guardarPagina(info, success, error, complete);
   }
 
   showSaveBtn() {

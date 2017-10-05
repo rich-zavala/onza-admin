@@ -34,5 +34,7 @@
     <router-outlet></router-outlet>
   </div>
 
-
+  <div *ngIf="!seccionActual">
+    <router-outlet></router-outlet>
+  </div>
 </div>

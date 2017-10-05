@@ -25,12 +25,13 @@ export interface IPaginaData {
  */
 export interface IServerResponse {
   error: number;
-  valores: any[];
+  valores: any;
 }
 
 @Injectable()
 export class RequestService {
   private servidor = 'http://192.168.0.6/onza/admin/'; // URL del servidor
+  private loginUrl = 'http://192.168.0.6/onza/acceso/login.html'; // URL del controlador de sesiones en el servidor
   private paginasUrl = this.servidor + 'paginas.html'; // URL del controlador de páginas en el servidor
   private accesosUrl = this.servidor + 'accesos.html'; // URL del controlador de claves de acceso en el servidor
   private inmueblesUrl = this.servidor + 'inmuebles.html'; // URL del controlador de claves de acceso en el servidor
@@ -41,7 +42,7 @@ export class RequestService {
    * Esta función es un auxiliar que ejecuta los callbacks.
    * La puse aparte porque prácticamente todas las solicitudes al servidor son iguales...
    */
-  httpRequest(subject: Observable<Object>, success: Function, error: Function, complete: Function) {
+  httpRequest(subject: Observable<Object>, success: Function, error: Function, complete?: Function) {
     subject.subscribe(
       (res: IServerResponse) => {
         switch (res.error) {
@@ -50,24 +51,47 @@ export class RequestService {
             break;
 
           case 1: // Error del servidor
+            if (typeof error === 'function') {
+              error();
+            }
+            break;
+
+          case 2: // La sesión ha terminado
             alert('Tu sesión de usuario ha terminado.');
-            error();
+            if (typeof error === 'function') {
+              error();
+            }
             break;
 
           default:
             alert('Ha ocurrido un error. Intente de nuevo más tarde. 1');
-            error();
+            if (typeof error === 'function') {
+              error();
+            }
         }
       },
-      () => error(),
-      () => complete());
+      () => {
+        if (typeof error === 'function') {
+          error();
+        }
+      },
+      () => {
+        if (typeof complete === 'function') {
+          complete();
+        }
+      });
+  }
+
+  login(data: IPaginaData, success: Function, error: Function, complete?: Function) {
+    let subject = this.http.post(this.loginUrl, data);
+    return this.httpRequest(subject, success, error, complete);
   }
 
   /**
    * Traer información de la tabla "paginas"
    * Los parámetros son funciones a ejecutarse en cada caso (callbacks)
    */
-  obtenerPaginas(success: Function, error: Function, complete: Function) {
+  obtenerPaginas(success: Function, error: Function, complete?: Function) {
     let subject = this.http.get(this.paginasUrl);
     return this.httpRequest(subject, success, error, complete);
   }
@@ -77,7 +101,7 @@ export class RequestService {
    * "data" contiene la información que será mandada al servidor
    * El resto de los parámetros son funciones a ejecutarse en cada caso
    */
-  guardarPagina(data: IPaginaData, success: Function, error: Function, complete: Function) {
+  guardarPagina(data: IPaginaData, success: Function, error: Function, complete?: Function) {
     let subject = this.http.put(this.paginasUrl, data);
     return this.httpRequest(subject, success, error, complete);
   }
@@ -85,7 +109,7 @@ export class RequestService {
   /**
    * Enviar cambios de claves de acceso
    */
-  cambiarAccesos(data, success, error, complete) {
+  cambiarAccesos(data: any, success: Function, error: Function, complete?: Function) {
     let subject = this.http.put(this.accesosUrl, data);
     return this.httpRequest(subject, success, error, complete);
   }

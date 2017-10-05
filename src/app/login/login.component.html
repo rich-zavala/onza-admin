@@ -1,0 +1,28 @@
+<form [formGroup]="form" (ngSubmit)="login($event)" [class.show]="!accesoConcedido" class="step">
+  <p-dialog [(visible)]="form" [modal]="true" [draggable]="false" [closeOnEscape]="false" [dismissableMask]="false" [closable]="false"
+    [positionTop]="150" width="600">
+    <p-header>
+      Acceso al portal de gestión de contenido
+    </p-header>
+
+    <div formGroupName="login">
+      <div class="input-container">
+        <span class="ui-float-label">
+          <input id="usuario" type="text" formControlName="nombre" (ngModelChange)="resetMessages()" autofocus pInputText> 
+          <label for="usuario">Nombre de usuario</label>
+        </span>
+      </div>
+      <div class="input-container">
+        <span class="ui-float-label">
+          <input id="password" type="password" formControlName="password" (ngModelChange)="resetMessages()" pInputText> 
+          <label for="password">Contraseña</label>
+        </span>
+      </div>
+
+      <p-messages [(value)]="msgs"></p-messages>
+    </div>
+    <p-footer>
+      <button pButton type="submit" label="Acceder" icon="fa-unlock" [disabled]="verificando || form.invalid"></button>
+    </p-footer>
+  </p-dialog>
+</form>

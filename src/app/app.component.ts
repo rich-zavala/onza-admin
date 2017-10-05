@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { SessionService } from './session.service';
 
 class Seccion {
   nombre: string;
@@ -37,7 +38,7 @@ export class AppComponent {
 
   seccionActual: Seccion;
 
-  constructor(private route: ActivatedRoute, private router: Router) {
+  constructor(private session: SessionService, private route: ActivatedRoute, private router: Router) {
     router.events.subscribe((url: any) => {
       this.activarSeccion(router.url);
     });

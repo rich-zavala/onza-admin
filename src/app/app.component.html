@@ -1,4 +1,4 @@
-<div class="container-fluid main-container">
+<div class="container main-container">
   <nav class="navbar navbar-default">
     <div class="container-fluid">
       <!-- Brand and toggle get grouped for better mobile display -->
@@ -13,17 +13,26 @@
         <a class="navbar-brand" href="#">Onza Inmobiliaria</a>
       </div>
 
+
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <p class="navbar-text navbar-right"><a routerLink="/logout"><i class="fa fa-fw fa-lock"></i> Cerrar sesión</a></p>
         <ul class="nav navbar-nav">
-          <li [class.active]="activePage === 'inmuebles'"><a routerLink="/inmuebles"><i class="fa fa-fw fa-home"></i> Inmuebles</a></li>
-          <li [class.active]="activePage === 'acercade'"><a routerLink="/acercade"><i class="fa fa-fw fa-building"></i> Acerca de nosotros</a></li>
-          <li [class.active]="activePage === 'contacto'"><a routerLink="/contacto"><i class="fa fa-fw fa-phone"></i> Contacto</a></li>
-          <li [class.active]="activePage === 'accesos'"><a routerLink="/accesos"><i class="fa fa-fw fa-user"></i> Claves de acceso</a></li>
+          <li [class.active]="seccion.active" *ngFor="let seccion of secciones">
+            <a routerLink="/{{seccion.nombre}}">
+              <i class="fa fa-fw {{seccion.icono}}"></i>
+              {{seccion.titulo}}
+            </a>
+          </li>
         </ul>
       </div>
     </div>
   </nav>
 
-  <router-outlet></router-outlet>
+  <div *ngIf="seccionActual">
+    <h2>{{seccionActual.titulo}}</h2>
+    <router-outlet></router-outlet>
+  </div>
+
+
 </div>

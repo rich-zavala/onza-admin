@@ -1,15 +1,24 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { RequestService, IServerResponse } from '../request.service';
 
 @Component({
   selector: 'app-inmuebles',
   templateUrl: './inmuebles.component.html',
   styleUrls: ['./inmuebles.component.css']
 })
-export class InmueblesComponent implements OnInit {
+export class InmueblesComponent {
+  inmuebles: any[];
 
-  constructor() { }
+  constructor(private saveService: RequestService) {
+    this.obtenerInmuebles();
+  }
 
-  ngOnInit() {
+  obtenerInmuebles() {
+    let success = (res: IServerResponse) => {
+      this.inmuebles = res.valores;
+    };
+    let error = () => alert('Ha ocurrido un error. Intente de nuevo más tarde.');
+    this.saveService.obtenerInmuebles(success, error, () => null)
   }
 
 }

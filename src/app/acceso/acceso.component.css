@@ -1,0 +1,10 @@
+.input-container {
+  margin: 15px 0 0px 0;
+  display: block;
+  border: 0px solid;
+  height: 44px;
+}
+
+.ui-float-label input {
+  width: 400px;
+}

@@ -1,3 +1,30 @@
-<p>
-  inmuebles-form works!
-</p>
+<p-tabView>
+  <p-tabPanel header="Información">
+    <h3 class="first">Introduzca datos de la propiedad</h3>
+    <div class="ui-g ui-fluid">
+      <div class="ui-g-12 ui-md-4">
+        <div class="ui-inputgroup">
+          <span class="ui-inputgroup-addon"></span>
+          <input type="text" pInputText placeholder="Encabezado">
+        </div>
+      </div>
+      <div class="ui-g-12 ui-md-4">
+        <div class="ui-inputgroup">
+          <span class="ui-inputgroup-addon">$</span>
+          <input type="text" pInputText placeholder="Precio">
+          <span class="ui-inputgroup-addon">.00</span>
+        </div>
+      </div>
+      <div class="ui-g-12 ui-md-4">
+        <p-dropdown [options]="cities" [(ngModel)]="selectedCity"></p-dropdown>
+      </div>
+    </div>
+    </div>
+  </p-tabPanel>
+  <p-tabPanel header="Ubicación">
+    Content 2
+  </p-tabPanel>
+  <p-tabPanel header="Imágenes">
+    Content 3
+  </p-tabPanel>
+</p-tabView>

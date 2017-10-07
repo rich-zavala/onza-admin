@@ -115,11 +115,11 @@ export class RequestService {
   }
 
   /**
-   * Traer información de todos los inmuebles
+   * Trae información de todos los inmuebles
    * Los parámetros son funciones a ejecutarse en cada caso (callbacks)
    */
-  obtenerInmuebles(success: Function, error: Function, complete: Function) {
+  obtenerInmuebles(success: Function, error: Function) {
     let subject = this.http.get(this.inmueblesUrl);
-    return this.httpRequest(subject, success, error, complete);
+    return this.httpRequest(subject, success, error);
   }
 }

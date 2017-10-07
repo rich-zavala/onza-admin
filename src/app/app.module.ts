@@ -5,8 +5,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { EditorModule, TooltipModule, InputTextModule, DialogModule, PanelModule, MessagesModule, ButtonModule } from 'primeng/primeng';
-
+import { EditorModule, TooltipModule, InputTextModule, DialogModule, PanelModule, MessagesModule, ButtonModule, DataTableModule, SharedModule, TabViewModule, DropdownModule } from 'primeng/primeng';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { InmueblesComponent } from './inmuebles/inmuebles.component';
@@ -39,6 +38,9 @@ import { MessageService } from 'primeng/components/common/messageservice';
       [{
         path: 'inmuebles',
         component: InmueblesComponent
+      }, {
+        path: 'inmuebles_form/:id',
+        component: InmueblesFormComponent
       },
       {
         path: 'paginas/:seccion',
@@ -61,7 +63,11 @@ import { MessageService } from 'primeng/components/common/messageservice';
     DialogModule,
     PanelModule,
     MessagesModule,
-    ButtonModule
+    ButtonModule,
+    DataTableModule,
+    SharedModule,
+    TabViewModule,
+    DropdownModule
   ],
   providers: [
     MessageService,

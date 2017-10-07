@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { RequestService, IServerResponse } from '../request.service';
+import Inmueble from '../../modelos/inmueble';
 
 @Component({
   selector: 'app-inmuebles',
@@ -7,18 +8,31 @@ import { RequestService, IServerResponse } from '../request.service';
   styleUrls: ['./inmuebles.component.css']
 })
 export class InmueblesComponent {
-  inmuebles: any[];
+  inmuebles: Inmueble[] = [];
+  cargando = true;
 
-  constructor(private saveService: RequestService) {
+  constructor(private requestService: RequestService) {
     this.obtenerInmuebles();
   }
 
   obtenerInmuebles() {
     let success = (res: IServerResponse) => {
-      this.inmuebles = res.valores;
+      this.inmuebles = res.valores.map(registro => new Inmueble(registro));
+      this.cargando = false;
     };
     let error = () => alert('Ha ocurrido un error. Intente de nuevo más tarde.');
-    this.saveService.obtenerInmuebles(success, error, () => null)
+    this.requestService.obtenerInmuebles(success, error);
   }
 
+  editar(inmueble: Inmueble) {
+    alert("Editando inmueble: " + inmueble.id);
+  }
+
+  eliminar(inmueble: Inmueble) {
+    alert("Eliminando inmueble: " + inmueble.id);
+  }
+
+  agregar() {
+    alert("Agregando nuevo registro");
+  }
 }

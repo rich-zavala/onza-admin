@@ -1,4 +1,38 @@
-<p>
-  inmuebles works!
-</p>
-<pre>{{inmuebles | json}}</pre>
+<div class="row marginBottom10">
+  <div class="col-sm-9">
+    <blockquote>Gestiona los registros del portal</blockquote>
+  </div>
+  <div class="col-sm-3 text-right">
+    <button class="btn btn-primary btn-block" (click)="agregar()">
+        <i class="fa fa-fw fa-plus"></i> Agregar registro
+      </button>
+  </div>
+</div>
+
+<div class="ui-widget-header" style="padding:4px 10px;border-bottom: 0 none">
+  <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
+  <input #gb type="text" pInputText size="20">
+</div>
+
+<div class="alert alert-warning" *ngIf="cargando"> <i class="fa fa-fw fa-spin fa-spinner"></i> Cargando información...</div>
+
+<p-dataTable [value]="inmuebles" [rows]="15" [paginator]="true" [emptyMessage]="'No hay nada'" [globalFilter]="gb" #dt *ngIf="!cargando">
+  <p-column field="id" header="Folio" [sortable]="true" class="w50"></p-column>
+  <p-column field="encabezado" header="Encabezado" [sortable]="true"></p-column>
+  <p-column field="ubicacion" header="Ubicación" [sortable]="true"></p-column>
+  <p-column field="fotos_count" header="Imágenes" [sortable]="true"></p-column>
+  <p-column field="fecha_registro" header="Fecha de registro" [sortable]="true"></p-column>
+  <p-column styleClass="col-button">
+    <ng-template pTemplate="header">
+      Acciones
+    </ng-template>
+    <ng-template let-inmueble="rowData" pTemplate="body">
+      <div class="text-center">
+        <button type="button" pButton (click)="editar(inmueble)" icon="fa-pencil-square-o"></button>
+        <button type="button" class="ui-button-danger" pButton (click)="eliminar(inmueble)" icon="fa-trash-o"></button>
+      </div>
+    </ng-template>
+  </p-column>
+</p-dataTable>
+
+<div class="margin-b20"></div>

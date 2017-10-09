@@ -1,30 +1,75 @@
+<div class="row marginBottom10">
+  <div class="col-sm-9">
+    <blockquote>Introduzca datos del inmueble</blockquote>
+  </div>
+  <div class="col-sm-3 text-right">
+    <button class="btn btn-primary btn-block" (click)="agregar()">
+      <i class="fa fa-fw fa-plus"></i> Agregar registro
+    </button>
+  </div>
+</div>
 <p-tabView>
-  <p-tabPanel header="Información">
-    <h3 class="first">Introduzca datos de la propiedad</h3>
-    <div class="ui-g ui-fluid">
-      <div class="ui-g-12 ui-md-4">
-        <div class="ui-inputgroup">
-          <span class="ui-inputgroup-addon"></span>
-          <input type="text" pInputText placeholder="Encabezado">
+  <p-tabPanel header="Información" leftIcon="fa fa-pencil">
+    <div class="form-horizontal">
+      <div class="form-group">
+        <label for="encabezado" class="col-sm-2 control-label">Encabezado</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" id="encabezado" name="encabezado" placeholder="">
         </div>
       </div>
-      <div class="ui-g-12 ui-md-4">
-        <div class="ui-inputgroup">
-          <span class="ui-inputgroup-addon">$</span>
-          <input type="text" pInputText placeholder="Precio">
-          <span class="ui-inputgroup-addon">.00</span>
+      <div class="form-group">
+        <label class="sr-only" for="precio" class="col-sm-2 control-label">Precio</label>
+        <div class="input-group col-sm-6">
+          <div class="input-group-addon">$</div>
+          <input type="number" class="form-control" id="precio" name="precio" placeholder="">
+          <div class="input-group-addon">.00</div>
         </div>
       </div>
-      <div class="ui-g-12 ui-md-4">
-        <p-dropdown [options]="cities" [(ngModel)]="selectedCity"></p-dropdown>
+      <div class="form-group">
+        <label>Tipo de servicio</label>
+        <div class="radio">
+          <label>
+           <input type="radio" name="tipo_servicio" id="renta" value="Renta" >Renta
+          </label>
+        </div>
+        <div class="radio">
+          <label>
+           <input type="radio" name="tipo_servicio" id="venta" value="Venta">Venta
+          </label>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Tipo de inmueble</label>
+        <div class="dropdown">
+          <p-dropdown [options]="tipos" [(ngModel)]="selectedTipos"></p-dropdown>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Descripción de inmueble</label>
+        <div>
+          <textarea class="form-control" rows="3"></textarea>
+        </div>
       </div>
     </div>
+  </p-tabPanel>
+  <p-tabPanel header="Ubicación" leftIcon="fa fa-map-marker">
+    Mapa
+  </p-tabPanel>
+  <p-tabPanel header="Imágenes" leftIcon="fa fa-picture-o">
+    <div class="row">
+      <div class="col-md-6">
+        <p-fileUpload name="myfile[]" url="./upload.php" multiple="multiple"></p-fileUpload>
+      </div>
+      <div class="col-md-6">
+        <p-orderList [value]="cars">
+          <ng-template let-car pTemplate="item">
+            <div class="ui-helper-clearfix">
+              <img src="assets/showcase/images/demo/car/{{car.brand}}.png" style="display:inline-block;margin:2px 0 2px 2px" width="48">
+              <div style="font-size:14px;float:right;margin:15px 5px 0 0">{{car.brand}} - {{car.year}} - {{car.color}}</div>
+            </div>
+          </ng-template>
+        </p-orderList>
+      </div>
     </div>
-  </p-tabPanel>
-  <p-tabPanel header="Ubicación">
-    Content 2
-  </p-tabPanel>
-  <p-tabPanel header="Imágenes">
-    Content 3
   </p-tabPanel>
 </p-tabView>

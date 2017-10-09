@@ -5,7 +5,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { EditorModule, TooltipModule, InputTextModule, DialogModule, PanelModule, MessagesModule, ButtonModule, DataTableModule, SharedModule, TabViewModule, DropdownModule } from 'primeng/primeng';
+import { EditorModule, TooltipModule, InputTextModule, DialogModule, PanelModule, MessagesModule, ButtonModule, DataTableModule, SharedModule, TabViewModule, DropdownModule, CheckboxModule, InputTextareaModule, FileUploadModule, OrderListModule } from 'primeng/primeng';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { InmueblesComponent } from './inmuebles/inmuebles.component';
@@ -17,6 +17,7 @@ import { InmueblesFormComponent } from './inmuebles-form/inmuebles-form.componen
 import { SessionService } from './session.service';
 import { RequestService } from './request.service';
 import { MessageService } from 'primeng/components/common/messageservice';
+
 
 @NgModule({
   declarations: [
@@ -67,7 +68,11 @@ import { MessageService } from 'primeng/components/common/messageservice';
     DataTableModule,
     SharedModule,
     TabViewModule,
-    DropdownModule
+    DropdownModule,
+    CheckboxModule,
+    InputTextareaModule,
+    FileUploadModule,
+    OrderListModule
   ],
   providers: [
     MessageService,

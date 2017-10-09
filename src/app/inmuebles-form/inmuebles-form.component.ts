@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-inmuebles-form',
@@ -7,9 +8,35 @@ import { Component, OnInit } from '@angular/core';
 })
 export class InmueblesFormComponent implements OnInit {
 
+
+
+  servicios = [
+    { label: 'Renta', value: 'Renta' },
+    { label: 'Venta', value: 'Venta' }
+  ];
+  selectedServicios: string[];
+
+
+  tipos = [
+    { label: 'Casa', value: 'Casa' },
+    { label: 'Condominio', value: 'Condominio' },
+    { label: 'Bodega', value: 'Bodega' },
+    { label: 'Departamento', value: 'Departamento' },
+    { label: 'Terreno', value: 'Terreno' },
+    { label: 'Penthouse', value: 'Penthouse' },
+    { label: 'Local', value: 'Local' },
+    { label: 'Oficina', value: 'Oficina' },
+    { label: 'Villa', value: 'Villa' },
+    { label: 'Edificio', value: 'Edificio' }
+  ];
+  selectedTipos = [];
+
+
   constructor() { }
 
   ngOnInit() {
   }
 
 }
+
+

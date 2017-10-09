@@ -12,8 +12,6 @@
         </button>
         <a class="navbar-brand" href="#">Onza Inmobiliaria</a>
       </div>
-
-
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <p class="navbar-text navbar-right"><a routerLink="/logout"><i class="fa fa-fw fa-lock"></i> Cerrar sesión</a></p>
@@ -33,7 +31,6 @@
     <h2>{{seccionActual.titulo}}</h2>
     <router-outlet></router-outlet>
   </div>
-
   <div *ngIf="!seccionActual">
     <router-outlet></router-outlet>
   </div>

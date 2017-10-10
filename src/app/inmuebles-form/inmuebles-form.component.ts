@@ -33,7 +33,12 @@ export class InmueblesFormComponent {
     ]
   });
 
-  ubicaciones = ['Norte', 'Sur', 'Este', 'Oeste'];
+  ubicaciones = [
+    { label: 'Norte', value: 'Norte' },
+    { label: 'Sur', value: 'Sur' },
+    { label: 'Este', value: 'Este' },
+    { label: 'Oeste', value: 'Oeste' }
+  ];
 
   tipos = [
     { label: 'Casa', value: 'Casa' },

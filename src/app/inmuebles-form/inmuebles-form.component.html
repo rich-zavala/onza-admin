@@ -16,9 +16,9 @@
   </div>
 </div>
 
-<pre>{{form.valid}}</pre>
+<!-- <pre>{{form.valid}}</pre>
 <pre>servicio {{form.controls.informacion.controls.servicio.invalid}}</pre>
-<pre>{{inmueble | json}}</pre>
+<pre>{{inmueble | json}}</pre> -->
 
 <form [formGroup]="form" (ngSubmit)="guardar($event)">
   <p-tabView>
@@ -35,7 +35,8 @@
           <div class="col-sm-6">
             <div class="input-group">
               <div class="input-group-addon">$</div>
-              <input type="number" class="form-control" id="precio" formControlName="precio" [(ngModel)]="inmueble.precio" />
+              <input type="number" class="form-control" pattern="[0-9]+(\.[0-9][0-9]?)?" id="precio" formControlName="precio" [(ngModel)]="inmueble.precio"
+              />
               <div class="input-group-addon">.00</div>
             </div>
           </div>
@@ -63,12 +64,12 @@
             </select>
           </div>
         </div>
-        <!--<div class="form-group">
+        <div class="form-group" [ngClass]="{'has-error': form.controls.informacion.controls.resumen.invalid}">
           <label for="resumen" class="col-sm-2 control-label">Pequeña descripción</label>
           <div class="col-sm-6">
-            <textarea name="resumen" class="form-control" rows="3"></textarea>
+            <textarea name="resumen" class="form-control" formControlName="resumen" id="resumen" rows="3" [(ngModel)]="inmueble.resumen"></textarea>
           </div>
-        </div> -->
+        </div>
       </div>
     </p-tabPanel>
     <p-tabPanel header="Descripción" leftIcon="fa fa-fw fa-file-text-o">
@@ -76,14 +77,15 @@
     </p-tabPanel>
     <p-tabPanel header="Ubicación" leftIcon="fa fa-fw fa-map-marker">
       <div class="form-horizontal" formGroupName="ubicacion">
-        <!--<div class="form-group">
-          <label for="ubicacion" class="col-sm-2 control-label">Ubicación</label>
+        <div class="form-group">
+          <label for="direccion" class="col-sm-2 control-label">Dirección</label>
           <div class="col-sm-6">
-            <select name="ubicacion" class="form-control" [(ngModel)]="selectedTipos">
-              <option *ngFor="let ubicacion of ubicaciones" [value]="ubicacion" [selected]="false">{{ubicacion}}</option>
-            </select>
+            <input type="text" class="form-control" id="direccion" formControlName="direccion" [(ngModel)]="inmueble.direccion" />
           </div>
         </div>
+
+
+        <!--
         <div class="form-horizontal" formGroupName="ubicacion">
           <div class="form-group">
             <label for="direccion" class="col-sm-2 control-label">Dirección</label>

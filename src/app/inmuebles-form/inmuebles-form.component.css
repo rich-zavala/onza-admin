@@ -1,0 +1,39 @@
+h4 {
+  margin-top: 0;
+}
+
+p-dropdown .ui-dropdown {
+  width: 200px !important;
+}
+
+.orderListContainer {
+  font-size: 12px;
+}
+
+.orderListContainer .ui-helper-clearfix img {
+  display: inline-block;
+  /* margin:2px 0 2px 2px; */
+  max-height: 68px;
+}
+
+.orderListContainer .ui-helper-clearfix .foto-info {
+  text-align: center;
+  float: right;
+  width: 100px;
+}
+
+.orderListContainer .ui-helper-clearfix .foto-info div {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-bottom: 4px;
+}
+
+.orderListContainer .ui-orderlist.ui-widget {
+  width: 100%;
+}
+
+.orderListContainer .ui-orderlist .ui-orderlist-list {
+  width: 100%;
+  height: 340px;
+}

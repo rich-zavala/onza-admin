@@ -5,7 +5,23 @@ import { RouterModule, Routes } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { EditorModule, TooltipModule, InputTextModule, DialogModule, PanelModule, MessagesModule, ButtonModule, DataTableModule, SharedModule, TabViewModule, DropdownModule, CheckboxModule, InputTextareaModule, FileUploadModule, OrderListModule } from 'primeng/primeng';
+import {
+  EditorModule,
+  TooltipModule,
+  InputTextModule,
+  DialogModule,
+  PanelModule,
+  MessagesModule,
+  ButtonModule,
+  DataTableModule,
+  SharedModule,
+  TabViewModule,
+  DropdownModule,
+  CheckboxModule,
+  InputTextareaModule,
+  FileUploadModule,
+  OrderListModule
+} from 'primeng/primeng';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { InmueblesComponent } from './inmuebles/inmuebles.component';

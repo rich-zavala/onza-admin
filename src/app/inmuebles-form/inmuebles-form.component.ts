@@ -1,21 +1,39 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { Component, ViewEncapsulation, Inject } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import Inmueble from '../../modelos/inmueble';
+import { RequestService } from '../request.service';
 
 @Component({
+  encapsulation: ViewEncapsulation.None,
   selector: 'app-inmuebles-form',
   templateUrl: './inmuebles-form.component.html',
   styleUrls: ['./inmuebles-form.component.css']
 })
-export class InmueblesFormComponent implements OnInit {
+export class InmueblesFormComponent {
+  form: FormGroup;
+  save: any = {};
+  inmueble: Inmueble = new Inmueble({
+    id: 0,
+    servicio: 'Venta',
+    tipo: 'Condominio',
+    ubicacion: 'Norte',
+    direccion: 'Calle 5e #444 por 48 y 46 Residencial Pensiones',
+    precio: '1000000',
+    descripcion: 'Una <b>linda</b> casa',
+    encabezado: 'Bonita casa en Pensiones',
+    foto_principal: '5.jpg',
+    resumen: 'Ven a conocer nuestra mejor casa en el mejor rumbo de la ciudad',
+    coordenadas: '17.0615173, -96.7259793',
+    fotos: [
+      '1.jpg',
+      'nombre extremadamente largo y molesto!!!!.jpg',
+      '3.jpg',
+      '4.jpg',
+      '5.jpg'
+    ]
+  });
 
-
-
-  servicios = [
-    { label: 'Renta', value: 'Renta' },
-    { label: 'Venta', value: 'Venta' }
-  ];
-  selectedServicios: string[];
-
+  ubicaciones = ['Norte', 'Sur', 'Este', 'Oeste'];
 
   tipos = [
     { label: 'Casa', value: 'Casa' },
@@ -29,14 +47,58 @@ export class InmueblesFormComponent implements OnInit {
     { label: 'Villa', value: 'Villa' },
     { label: 'Edificio', value: 'Edificio' }
   ];
-  selectedTipos = [];
 
+  constructor(
+    @Inject(FormBuilder) fb: FormBuilder,
+    private reqService: RequestService
+  ) {
+    this.form = fb.group({
+      informacion: fb.group({
+        encabezado: [this.inmueble.encabezado, [Validators.required, Validators.minLength(4)]],
+        precio: [this.inmueble.precio, [Validators.required]], // Investigar cómo hacer un validador de números positivos
+        servicio: [this.inmueble.servicio, [Validators.required]],
+        tipo: [this.inmueble.tipo, [Validators.required]],
+        resumen: [this.inmueble.resumen, [Validators.required]]
+      }),
+      descripcion: fb.group({
+        descripcion: [this.inmueble.descripcion, [Validators.required, Validators.minLength(4)]]
+      }),
+      ubicacion: fb.group({
+        ubicacion: [this.inmueble.ubicacion, [Validators.required]],
+        direccion: [this.inmueble.direccion, [Validators.required, Validators.minLength(4)]]
+      })
+    });
 
-  constructor() { }
+    this.showSaveBtn();
 
-  ngOnInit() {
+    console.log(this.form);
   }
 
+  showSaveBtn() {
+    this.save.pending = true;
+    this.save.success = false;
+    this.save.working = false;
+  }
+
+  guardar($event) {
+    $event.stopPropagation();
+    this.save.pending = false;
+    this.save.working = true;
+    let info = this.form.value.claves;
+    delete info.confirmPassword;
+
+    let success = () => {
+      this.save.success = true;
+      setTimeout(() => {
+        this.showSaveBtn();
+      }, 2000);
+    };
+    let error = () => this.showSaveBtn();
+    let complete = () => this.save.working = false;
+
+    this.reqService.cambiarAccesos(info, success, error, complete);
+
+  }
 }
 
 

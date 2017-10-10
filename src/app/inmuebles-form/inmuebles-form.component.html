@@ -3,73 +3,121 @@
     <blockquote>Introduzca datos del inmueble</blockquote>
   </div>
   <div class="col-sm-3 text-right">
-    <button class="btn btn-primary btn-block" (click)="agregar()">
-      <i class="fa fa-fw fa-plus"></i> Agregar registro
+    <button class="btn btn-primary btn-block" pTooltip="Guardar cambios" tooltipPosition="top" (click)="guardar()" *ngIf="save.pending"
+      [disabled]="form.invalid">
+      <i class="fa fa-fw fa-2x fa-save"></i>
+    </button>
+    <button class="btn btn-success btn-block" title="Cambios guardados exitosamente" *ngIf="save.success">
+      <i class="fa fa-fw fa-2x fa-check"></i>
+    </button>
+    <button class="btn btn-warning btn-block active" title="Guardando..." *ngIf="save.working">
+      <i class="fa fa-fw fa-spinner fa-2x fa-pulse"></i>
     </button>
   </div>
 </div>
-<p-tabView>
-  <p-tabPanel header="Información" leftIcon="fa fa-pencil">
-    <div class="form-horizontal">
-      <div class="form-group">
-        <label for="encabezado" class="col-sm-2 control-label">Encabezado</label>
-        <div class="col-sm-6">
-          <input type="text" class="form-control" id="encabezado" name="encabezado" placeholder="">
+
+<pre>{{form.valid}}</pre>
+<pre>servicio {{form.controls.informacion.controls.servicio.invalid}}</pre>
+<pre>{{inmueble | json}}</pre>
+
+<form [formGroup]="form" (ngSubmit)="guardar($event)">
+  <p-tabView>
+    <p-tabPanel header="Información" leftIcon="fa fa-fw fa-pencil">
+      <div class="form-horizontal" formGroupName="informacion">
+        <div class="form-group" [ngClass]="{'has-error': form.controls.informacion.controls.encabezado.invalid}">
+          <label for="encabezado" class="col-sm-2 control-label">Encabezado</label>
+          <div class="col-sm-6">
+            <input type="text" class="form-control" id="encabezado" formControlName="encabezado" [(ngModel)]="inmueble.encabezado" />
+          </div>
         </div>
-      </div>
-      <div class="form-group">
-        <label class="sr-only" for="precio" class="col-sm-2 control-label">Precio</label>
-        <div class="input-group col-sm-6">
-          <div class="input-group-addon">$</div>
-          <input type="number" class="form-control" id="precio" name="precio" placeholder="">
-          <div class="input-group-addon">.00</div>
-        </div>
-      </div>
-      <div class="form-group">
-        <label>Tipo de servicio</label>
-        <div class="radio">
-          <label>
-           <input type="radio" name="tipo_servicio" id="renta" value="Renta" >Renta
-          </label>
-        </div>
-        <div class="radio">
-          <label>
-           <input type="radio" name="tipo_servicio" id="venta" value="Venta">Venta
-          </label>
-        </div>
-      </div>
-      <div class="form-group">
-        <label>Tipo de inmueble</label>
-        <div class="dropdown">
-          <p-dropdown [options]="tipos" [(ngModel)]="selectedTipos"></p-dropdown>
-        </div>
-      </div>
-      <div class="form-group">
-        <label>Descripción de inmueble</label>
-        <div>
-          <textarea class="form-control" rows="3"></textarea>
-        </div>
-      </div>
-    </div>
-  </p-tabPanel>
-  <p-tabPanel header="Ubicación" leftIcon="fa fa-map-marker">
-    Mapa
-  </p-tabPanel>
-  <p-tabPanel header="Imágenes" leftIcon="fa fa-picture-o">
-    <div class="row">
-      <div class="col-md-6">
-        <p-fileUpload name="myfile[]" url="./upload.php" multiple="multiple"></p-fileUpload>
-      </div>
-      <div class="col-md-6">
-        <p-orderList [value]="cars">
-          <ng-template let-car pTemplate="item">
-            <div class="ui-helper-clearfix">
-              <img src="assets/showcase/images/demo/car/{{car.brand}}.png" style="display:inline-block;margin:2px 0 2px 2px" width="48">
-              <div style="font-size:14px;float:right;margin:15px 5px 0 0">{{car.brand}} - {{car.year}} - {{car.color}}</div>
+        <div class="form-group" [ngClass]="{'has-error': form.controls.informacion.controls.precio.invalid}">
+          <label for="precio" class="col-sm-2 control-label">Precio</label>
+          <div class="col-sm-6">
+            <div class="input-group">
+              <div class="input-group-addon">$</div>
+              <input type="number" class="form-control" id="precio" formControlName="precio" [(ngModel)]="inmueble.precio" />
+              <div class="input-group-addon">.00</div>
             </div>
-          </ng-template>
-        </p-orderList>
+          </div>
+        </div>
+        <div class="form-group" [ngClass]="{'has-error': form.controls.informacion.controls.servicio.invalid}">
+          <label for="servicio" class="col-sm-2 control-label">Tipo de servicio</label>
+          <div class="col-sm-6">
+            <div class="radio">
+              <label>
+                <input type="radio" id="servicio" value="Renta" formControlName="servicio" [(ngModel)]="inmueble.servicio"> Renta
+              </label>
+            </div>
+            <div class="radio">
+              <label>
+                <input type="radio" value="Venta" formControlName="servicio" [(ngModel)]="inmueble.servicio"> Venta
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="form-group" [ngClass]="{'has-error': form.controls.informacion.controls.tipo.invalid}">
+          <label for="tipo" class="col-sm-2 control-label">Tipo de inmueble</label>
+          <div class="col-sm-6">
+            <select name="tipo" class="form-control" formControlName="tipo" [(ngModel)]="inmueble.tipo">
+              <option *ngFor="let tipo of tipos" [value]="tipo.value">{{tipo.label}}</option>
+            </select>
+          </div>
+        </div>
+        <!--<div class="form-group">
+          <label for="resumen" class="col-sm-2 control-label">Pequeña descripción</label>
+          <div class="col-sm-6">
+            <textarea name="resumen" class="form-control" rows="3"></textarea>
+          </div>
+        </div> -->
       </div>
-    </div>
-  </p-tabPanel>
-</p-tabView>
+    </p-tabPanel>
+    <p-tabPanel header="Descripción" leftIcon="fa fa-fw fa-file-text-o">
+      <!-- <p-editor [(ngModel)]="descripcion" [style]="{'height':'280px'}"></p-editor> -->
+    </p-tabPanel>
+    <p-tabPanel header="Ubicación" leftIcon="fa fa-fw fa-map-marker">
+      <div class="form-horizontal" formGroupName="ubicacion">
+        <!--<div class="form-group">
+          <label for="ubicacion" class="col-sm-2 control-label">Ubicación</label>
+          <div class="col-sm-6">
+            <select name="ubicacion" class="form-control" [(ngModel)]="selectedTipos">
+              <option *ngFor="let ubicacion of ubicaciones" [value]="ubicacion" [selected]="false">{{ubicacion}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-horizontal" formGroupName="ubicacion">
+          <div class="form-group">
+            <label for="direccion" class="col-sm-2 control-label">Dirección</label>
+            <div class="col-sm-6">
+              <input type="text" class="form-control" id="direccion" name="direccion" />
+            </div>
+          </div>
+        </div>-->
+      </div>
+      Mapa
+    </p-tabPanel>
+    <p-tabPanel header="Imágenes" leftIcon="fa fa-fw fa-picture-o">
+      <div class="row">
+        <div class="col-md-8">
+          <h4 class="text-primary">Agrega fotos</h4>
+          <p-fileUpload name="myfile[]" url="./upload.php" multiple="multiple"></p-fileUpload>
+        </div>
+        <div class="col-md-4">
+          <h4 class="text-primary">Ordena las fotos</h4>
+          <div class="orderListContainer">
+            <p-orderList [value]="imagenes" dragdrop="true" dragdropScope="imagenes">
+              <ng-template let-imagen pTemplate="item">
+                <div class="ui-helper-clearfix">
+                  <div class="foto-info">
+                    <div>{{imagen}}</div>
+                    <button pButton type="button" (click)="onclick()" label="Eliminar" icon="fa-trash"></button>
+                  </div>
+                  <img src="assets/fotos/{{imagen}}">
+                </div>
+              </ng-template>
+            </p-orderList>
+          </div>
+        </div>
+      </div>
+    </p-tabPanel>
+  </p-tabView>
+</form>

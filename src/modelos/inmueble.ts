@@ -7,6 +7,9 @@ export default class Inmueble {
   precio: number;
   descripcion: string;
   encabezado: string;
+  metros: number;
+  banos: number;
+  habitaciones: number;
   foto_principal: string;
   fecha_registro: Date;
   fecha_update: Date;
@@ -23,6 +26,9 @@ export default class Inmueble {
     this.precio = o.precio || this.precio;
     this.descripcion = o.descripcion || this.descripcion;
     this.encabezado = o.encabezado || this.encabezado;
+    this.metros = o.metros || this.metros;
+    this.banos = o.banos || this.banos;
+    this.habitaciones = o.habitaciones || this.habitaciones;
     this.foto_principal = o.foto_principal || this.foto_principal;
     this.fecha_registro = o.fecha_registro || this.fecha_registro;
     this.fecha_update = o.fecha_update || this.fecha_update;

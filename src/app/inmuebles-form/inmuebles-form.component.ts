@@ -12,6 +12,9 @@ import { RequestService } from '../request.service';
 export class InmueblesFormComponent {
   form: FormGroup;
   save: any = {};
+  value: string;
+  originalValue: string;
+  noDelta = true;
   inmueble: Inmueble = new Inmueble({
     id: 0,
     servicio: 'Venta',
@@ -20,6 +23,9 @@ export class InmueblesFormComponent {
     direccion: 'Calle 5e #444 por 48 y 46 Residencial Pensiones',
     precio: '1000000',
     descripcion: 'Una <b>linda</b> casa',
+    metros: '1000',
+    banos: '2',
+    habitaciones: '5',
     encabezado: 'Bonita casa en Pensiones',
     foto_principal: '5.jpg',
     resumen: 'Ven a conocer nuestra mejor casa en el mejor rumbo de la ciudad',
@@ -63,7 +69,10 @@ export class InmueblesFormComponent {
         precio: [this.inmueble.precio, [Validators.required]], // Investigar cómo hacer un validador de números positivos
         servicio: [this.inmueble.servicio, [Validators.required]],
         tipo: [this.inmueble.tipo, [Validators.required]],
-        resumen: [this.inmueble.resumen, [Validators.required]]
+        resumen: [this.inmueble.resumen, [Validators.required]],
+        metros: [this.inmueble.metros, [Validators.required]],
+        banos: [this.inmueble.banos, [Validators.required]],
+        habitaciones: [this.inmueble.habitaciones, [Validators.required]]
       }),
       descripcion: fb.group({
         descripcion: [this.inmueble.descripcion, [Validators.required, Validators.minLength(4)]]
@@ -103,6 +112,11 @@ export class InmueblesFormComponent {
 
     this.reqService.cambiarAccesos(info, success, error, complete);
 
+  }
+  updateButtons() {
+    if (this.value !== this.originalValue) {
+      this.noDelta = false;
+    }
   }
 }
 

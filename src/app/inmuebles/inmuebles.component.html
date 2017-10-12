@@ -3,18 +3,20 @@
     <blockquote>Gestiona los registros del portal</blockquote>
   </div>
   <div class="col-sm-3 text-right">
-    <button class="btn btn-primary btn-block" (click)="agregar()">
-        <i class="fa fa-fw fa-plus"></i> Agregar registro
-      </button>
+    <a class="btn btn-primary btn-block" routerLink="/inmuebles_form">
+      <i class="fa fa-fw fa-2x fa-plus"></i> Agregar registro
+    </a>
   </div>
 </div>
 
-<div class="ui-widget-header" style="padding:4px 10px;border-bottom: 0 none">
+<div class="alert alert-warning margin-t20" *ngIf="cargando">
+  <i class="fa fa-fw fa-spin fa-spinner"></i> Cargando información...
+</div>
+
+<div class="ui-widget-header buscador" *ngIf="!cargando">
   <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
   <input #gb type="text" pInputText size="20">
 </div>
-
-<div class="alert alert-warning" *ngIf="cargando"> <i class="fa fa-fw fa-spin fa-spinner"></i> Cargando información...</div>
 
 <p-dataTable [value]="inmuebles" [rows]="15" [paginator]="true" [emptyMessage]="'No hay nada'" [globalFilter]="gb" #dt *ngIf="!cargando">
   <p-column field="id" header="Folio" [sortable]="true" class="w50"></p-column>
@@ -28,8 +30,8 @@
     </ng-template>
     <ng-template let-inmueble="rowData" pTemplate="body">
       <div class="text-center">
-        <button type="button" pButton (click)="editar(inmueble)" icon="fa-pencil-square-o"></button>
-        <button type="button" class="ui-button-danger" pButton (click)="eliminar(inmueble)" icon="fa-trash-o"></button>
+        <button type="button" pButton icon="fa-pencil-square-o" routerLink="/inmuebles_form/{{inmueble.id}}"></button>
+        <button type="button" pButton icon="fa-trash-o" class="ui-button-danger" (click)="eliminar(inmueble)"></button>
       </div>
     </ng-template>
   </p-column>

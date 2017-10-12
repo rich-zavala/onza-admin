@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { RequestService, IServerResponse } from '../request.service';
+import { InmueblesService } from '../inmuebles.service';
 import Inmueble from '../../modelos/inmueble';
 
 @Component({
@@ -8,31 +10,23 @@ import Inmueble from '../../modelos/inmueble';
   styleUrls: ['./inmuebles.component.css']
 })
 export class InmueblesComponent {
-  inmuebles: Inmueble[] = [];
+  inmuebles: Inmueble[];
   cargando = true;
 
-  constructor(private requestService: RequestService) {
-    this.obtenerInmuebles();
-  }
+  constructor(
+    private requestService: RequestService,
+    private inmueblesServicio: InmueblesService,
+    private router: Router) {
+    this.inmuebles = inmueblesServicio.inmuebles;
+    this.cargando = typeof this.inmuebles === 'undefined';
 
-  obtenerInmuebles() {
-    let success = (res: IServerResponse) => {
-      this.inmuebles = res.valores.map(registro => new Inmueble(registro));
+    inmueblesServicio.inmuebles$.subscribe(r => {
       this.cargando = false;
-    };
-    let error = () => alert('Ha ocurrido un error. Intente de nuevo más tarde.');
-    this.requestService.obtenerInmuebles(success, error);
-  }
-
-  editar(inmueble: Inmueble) {
-    alert("Editando inmueble: " + inmueble.id);
+      this.inmuebles = r;
+    });
   }
 
   eliminar(inmueble: Inmueble) {
-    alert("Eliminando inmueble: " + inmueble.id);
-  }
-
-  agregar() {
-    alert("Agregando nuevo registro");
+    alert('Eliminando inmueble: ' + inmueble.id);
   }
 }

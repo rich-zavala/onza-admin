@@ -32,8 +32,8 @@ import { InmueblesFormComponent } from './inmuebles-form/inmuebles-form.componen
 
 import { SessionService } from './session.service';
 import { RequestService } from './request.service';
+import { InmueblesService } from './inmuebles.service';
 import { MessageService } from 'primeng/components/common/messageservice';
-
 
 @NgModule({
   declarations: [
@@ -55,7 +55,12 @@ import { MessageService } from 'primeng/components/common/messageservice';
       [{
         path: 'inmuebles',
         component: InmueblesComponent
-      }, {
+      },
+      {
+        path: 'inmuebles_form',
+        component: InmueblesFormComponent
+      },
+      {
         path: 'inmuebles_form/:id',
         component: InmueblesFormComponent
       },
@@ -70,8 +75,8 @@ import { MessageService } from 'primeng/components/common/messageservice';
       {
         path: '',
         component: LoginComponent
-      },
-      { path: '**', component: NotFoundComponent }]
+      }]
+      // { path: '**', component: NotFoundComponent }]
     ),
 
     EditorModule,
@@ -93,7 +98,8 @@ import { MessageService } from 'primeng/components/common/messageservice';
   providers: [
     MessageService,
     SessionService,
-    RequestService
+    RequestService,
+    InmueblesService
   ],
   bootstrap: [AppComponent]
 })

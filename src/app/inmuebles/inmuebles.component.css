@@ -1,7 +1,16 @@
 .margin-b20 {
-    margin-bottom: 20px;
+  margin-bottom: 20px;
+}
+
+.margin-t20 {
+  margin-top: 20px;
 }
 
 .w50 {
-    width: 50px;
+  width: 50px;
+}
+
+.buscador {
+  padding: 4px 10px;
+  border-bottom: 0 none;
 }

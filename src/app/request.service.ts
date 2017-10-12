@@ -6,6 +6,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
+import Inmueble from '../modelos/inmueble';
 
 /**
  * Interfaz que indica el tipo de dato esperado de una página que será guardada
@@ -120,6 +121,16 @@ export class RequestService {
    */
   obtenerInmuebles(success: Function, error: Function) {
     let subject = this.http.get(this.inmueblesUrl);
+    return this.httpRequest(subject, success, error);
+  }
+
+  guardarInmueble(inmueble: Inmueble, success: Function, error: Function) {
+    let subject = this.http.put(this.inmueblesUrl, inmueble);
+    return this.httpRequest(subject, success, error);
+  }
+
+  registrarInmueble(inmueble: Inmueble, success: Function, error: Function) {
+    let subject = this.http.post(this.inmueblesUrl, inmueble);
     return this.httpRequest(subject, success, error);
   }
 }

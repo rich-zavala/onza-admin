@@ -115,7 +115,12 @@
           </div>
         </div>
       </div>
-      Mapa
+
+      <div>
+        <p-gmap [options]="options" [style]="{'width':'100%','height':'320px'}"></p-gmap>
+      </div>
+
+
     </p-tabPanel>
     <p-tabPanel header="Imágenes" leftIcon="fa fa-fw fa-picture-o" *ngIf="inmueble.id">
       <div class="row">

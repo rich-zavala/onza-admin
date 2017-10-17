@@ -20,7 +20,8 @@ import {
   CheckboxModule,
   InputTextareaModule,
   FileUploadModule,
-  OrderListModule
+  OrderListModule,
+  GMapModule
 } from 'primeng/primeng';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -93,7 +94,8 @@ import { MessageService } from 'primeng/components/common/messageservice';
     CheckboxModule,
     InputTextareaModule,
     FileUploadModule,
-    OrderListModule
+    OrderListModule,
+    GMapModule
   ],
   providers: [
     MessageService,

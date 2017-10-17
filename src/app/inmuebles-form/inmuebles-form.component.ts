@@ -47,6 +47,12 @@ export class InmueblesFormComponent {
     ]
   };
 
+  // Opciones iniciales del mapa
+  options = {
+    center: { lat: 36.890257, lng: 30.707417 },
+    zoom: 12
+  };
+
   constructor(
     @Inject(FormBuilder) private fb: FormBuilder,
     private reqService: RequestService,

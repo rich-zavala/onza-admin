@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { RequestService } from './request.service';
 import Inmueble from '../modelos/inmueble';
-// import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 
 @Injectable()
@@ -18,7 +17,6 @@ export class InmueblesService {
       let inmuebles = registros.valores.map(registro => new Inmueble(registro));
       this.inmuebles = inmuebles;
       this.inmuebles$.next(this.inmuebles);
-      console.warn('Los inmuebles están listos!!!');
     };
     let error = () => alert('Ha ocurrido un error. Intente de nuevo más tarde.');
     this.requestService.obtenerInmuebles(success, error);

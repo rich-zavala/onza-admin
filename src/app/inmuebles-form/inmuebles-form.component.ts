@@ -7,6 +7,11 @@ import { RequestService } from '../request.service';
 import { InmueblesService } from '../inmuebles.service';
 import * as _ from 'lodash';
 
+declare var google: any;
+
+const MAP_LAT = 20.966744;
+const MAP_LNG = -89.623002;
+
 @Component({
   encapsulation: ViewEncapsulation.None,
   selector: 'app-inmuebles-form',
@@ -48,10 +53,19 @@ export class InmueblesFormComponent {
   };
 
   // Opciones iniciales del mapa
-  options = {
-    center: { lat: 36.890257, lng: 30.707417 },
-    zoom: 12
+  mapOptions = {
+    center: { lat: MAP_LAT, lng: MAP_LNG },
+    zoom: 13
   };
+
+  // Información del marcador seleccionado en el mapa
+  mapCoordenadas = {
+    lat: MAP_LAT,
+    lng: MAP_LNG
+  };
+
+  // Información del marcador del mapa
+  mapMarcador = [];
 
   constructor(
     @Inject(FormBuilder) private fb: FormBuilder,
@@ -67,6 +81,8 @@ export class InmueblesFormComponent {
         this.obtenerInmueble();
       } else { // Creación
         this.inmueble = new Inmueble({});
+        this.establecerMarcador(MAP_LAT, MAP_LNG);
+        this.mapOptions.zoom = 13;
         this.setReady();
       }
     });
@@ -76,6 +92,12 @@ export class InmueblesFormComponent {
     let inmuebleInfo = this.inmueblesServicio.getInmueble(this.id);
     if (inmuebleInfo.ready) {
       this.inmueble = _.cloneDeep(inmuebleInfo.inmueble);
+
+      // Poner coordenadas en el marcador
+      let coordenadas = this.inmueble.coordenadas.split(',');
+      let lat = parseFloat(coordenadas[0]);
+      let lng = parseFloat(coordenadas[1]);
+      this.establecerMarcador(lat, lng);
       this.setReady();
     } else if (inmuebleInfo.error) {
       alert('El registro que estás buscando no se encuentra disponible.');
@@ -166,6 +188,19 @@ export class InmueblesFormComponent {
       this.noDelta = false;
     }
   }
+
+  ponerCoordenadas($event) {
+    this.mapCoordenadas.lat = $event.latLng.lat();
+    this.mapCoordenadas.lng = $event.latLng.lng();
+    this.inmueble.coordenadas = this.mapCoordenadas.lat + ',' + this.mapCoordenadas.lng;
+    this.establecerMarcador(this.mapCoordenadas.lat, this.mapCoordenadas.lng);
+  }
+
+  establecerMarcador(lat: number, lng: number) {
+    this.mapMarcador = [new google.maps.Marker({ position: { lat: lat, lng: lng }, title: 'Esta es la ubicación del inmueble' })];
+    this.mapOptions = {
+      center: { lat, lng },
+      zoom: 17
+    }
+  }
 }
-
-

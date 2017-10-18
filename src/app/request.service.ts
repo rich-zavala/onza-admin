@@ -31,8 +31,8 @@ export interface IServerResponse {
 
 @Injectable()
 export class RequestService {
-  private servidor = 'http://192.168.0.6/onza/admin/'; // URL del servidor
-  private loginUrl = 'http://192.168.0.6/onza/acceso/login.html'; // URL del controlador de sesiones en el servidor
+  private servidor = 'http://192.168.0.20/onza/admin/'; // URL del servidor
+  private loginUrl = 'http://192.168.0.20/onza/acceso/login.html'; // URL del controlador de sesiones en el servidor
   private paginasUrl = this.servidor + 'paginas.html'; // URL del controlador de páginas en el servidor
   private accesosUrl = this.servidor + 'accesos.html'; // URL del controlador de claves de acceso en el servidor
   private inmueblesUrl = this.servidor + 'inmuebles.html'; // URL del controlador de claves de acceso en el servidor

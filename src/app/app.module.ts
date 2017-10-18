@@ -73,11 +73,19 @@ import { MessageService } from 'primeng/components/common/messageservice';
         path: 'acceso',
         component: AccesoComponent
       },
+      // {
+      //   path: 'login',
+      //   component: LoginComponent
+      // },
       {
         path: '',
-        component: LoginComponent
+        pathMatch: 'full',
+        redirectTo: 'inmuebles'
+      },
+      {
+        path: '**',
+        component: NotFoundComponent
       }]
-      // { path: '**', component: NotFoundComponent }]
     ),
 
     EditorModule,

@@ -2,19 +2,21 @@ import { Component, Inject, ViewEncapsulation } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 
+import { SessionService } from '../session.service';
 import { RequestService, IServerResponse } from '../request.service';
+
 import { Message } from 'primeng/components/common/api';
 import { MessageService } from 'primeng/components/common/messageservice';
 
 @Component({
-  selector: 'app-root',
+  selector: 'app-login',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
   display = true;
-  servidor = 'http://192.168.0.6/onza/acceso/';
+  // servidor = 'http://192.168.0.20/onza/acceso/';
   title = 'app';
   form: FormGroup;
   verificando = false;
@@ -23,10 +25,12 @@ export class LoginComponent {
 
   constructor(
     @Inject(FormBuilder) fb: FormBuilder,
-    // private http: HttpClient,
+    private session: SessionService,
     private reqService: RequestService,
     private messageService: MessageService
   ) {
+    session.finalizarSesion();
+
     this.form = fb.group({
       'login': fb.group({
         nombre: ['', [Validators.required, Validators.minLength(4)]],
@@ -72,7 +76,7 @@ export class LoginComponent {
     this.msgs.push({ severity: 'success', summary: 'Accesso correcto' });
     setTimeout(() => {
       this.accesoConcedido = true;
-      // setTimeout(() => window.location.href = 'http://google.com', 800);
+      this.session.inicializarSesion();
     }, 1500);
   }
 }

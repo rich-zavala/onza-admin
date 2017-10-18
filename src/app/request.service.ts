@@ -14,6 +14,7 @@ import Inmueble from '../modelos/inmueble';
 export interface IPaginaData {
   seccion: string;
   valor?: string;
+  id?: string;
 }
 
 /**
@@ -48,7 +49,9 @@ export class RequestService {
       (res: IServerResponse) => {
         switch (res.error) {
           case 0: // Se guardó correctamente
-            success(res);
+            if (typeof success === 'function') {
+              success(res);
+            }
             break;
 
           case 1: // Error del servidor
@@ -58,9 +61,9 @@ export class RequestService {
             break;
 
           case 2: // La sesión ha terminado
-            alert('Tu sesión de usuario ha terminado.');
+            console.error('La sesión de usuario no es válida.');
             if (typeof error === 'function') {
-              error();
+              error(res);
             }
             break;
 
@@ -71,9 +74,10 @@ export class RequestService {
             }
         }
       },
-      () => {
+      (res: IServerResponse) => {
+        console.log(res);
         if (typeof error === 'function') {
-          error();
+          error(res);
         }
       },
       () => {

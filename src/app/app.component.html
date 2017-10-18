@@ -1,5 +1,9 @@
 <div class="container main-container">
-  <nav class="navbar navbar-default">
+  <div class="alert alert-warning" *ngIf="verificandoSesion">
+    <i class="fa fa-spinner fa-pulse fa-fw"></i> Verificando sesión...
+  </div>
+
+  <nav class="navbar navbar-default" *ngIf="sesionInicializada">
     <div class="container-fluid">
       <!-- Brand and toggle get grouped for better mobile display -->
       <div class="navbar-header">
@@ -14,7 +18,7 @@
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <p class="navbar-text navbar-right">
-          <a routerLink="/logout">
+          <a (click)="logout()">
             <i class="fa fa-fw fa-lock"></i> Cerrar sesión
           </a>
         </p>
@@ -30,8 +34,10 @@
     </div>
   </nav>
 
-  <div *ngIf="seccionActual">
+  <div *ngIf="sesionInicializada && seccionActual">
     <h2>{{seccionActual.titulo}}</h2>
     <router-outlet></router-outlet>
   </div>
+
+  <app-login *ngIf="!sesionInicializada && !verificandoSesion"></app-login>
 </div>

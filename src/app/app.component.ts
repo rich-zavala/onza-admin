@@ -29,6 +29,9 @@ class Seccion {
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  verificandoSesion = true;
+  sesionInicializada = false;
+
   secciones: Seccion[] = [
     new Seccion('inmuebles', 'fa-home', 'Inmuebles'),
     new Seccion('paginas/acerca_de', 'fa-building', 'Acerca de Nosotros'),
@@ -38,10 +41,23 @@ export class AppComponent {
 
   seccionActual: Seccion;
 
-  constructor(private session: SessionService, private route: ActivatedRoute, private router: Router) {
+  constructor(
+    private session: SessionService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {
+    this.sesionInicializada = session.sesionInicializada;
+    this.session.sesionControlador$.subscribe(estatusDeSesion => {
+      console.log('Status de la sesión', estatusDeSesion);
+      this.verificandoSesion = false;
+      this.sesionInicializada = estatusDeSesion;
+    });
+
     router.events.subscribe((url: any) => {
       this.activarSeccion(router.url);
     });
+
+    session.verificarStorage();
   }
 
   activarSeccion(idSeccion) {
@@ -53,5 +69,9 @@ export class AppComponent {
         seccion.desactivar();
       }
     });
+  }
+
+  logout() {
+    this.session.finalizarSesion();
   }
 }

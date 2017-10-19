@@ -6,27 +6,22 @@ p-dropdown .ui-dropdown {
   width: 200px !important;
 }
 
+.ui-orderlist-controls {
+  border-top: 1px solid #D5D5D5;
+  border-left: 1px solid #D5D5D5;
+  border-bottom: 1px solid #D5D5D5;
+  background: linear-gradient(to right, #f6f7f9 0%, #ebedf0 100%);
+}
+
+.ui-orderlist .ui-orderlist-controls .ui-button {
+  display: block;
+  margin: 1em 0;
+  padding: 5px;
+  font-size: 1.5em;
+}
+
 .orderListContainer {
   font-size: 12px;
-}
-
-.orderListContainer .ui-helper-clearfix img {
-  display: inline-block;
-  /* margin:2px 0 2px 2px; */
-  max-height: 68px;
-}
-
-.orderListContainer .ui-helper-clearfix .foto-info {
-  text-align: center;
-  float: right;
-  width: 100px;
-}
-
-.orderListContainer .ui-helper-clearfix .foto-info div {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  margin-bottom: 4px;
 }
 
 .orderListContainer .ui-orderlist.ui-widget {
@@ -35,5 +30,42 @@ p-dropdown .ui-dropdown {
 
 .orderListContainer .ui-orderlist .ui-orderlist-list {
   width: 100%;
-  height: 340px;
+  height: 321px;
+}
+
+.ui-orderlist .ui-orderlist-list .ui-orderlist-item {
+  padding: 6px 4px;
+}
+
+.orderListContainer .foto-img {
+  width: 180px;
+  text-align: center;
+}
+
+.orderListContainer img {
+  display: inline-block;
+  box-shadow: 3px 3px 7px #6d6565;
+  max-height: 90px;
+}
+
+.orderListContainer .foto-info {
+  text-align: center;
+  float: right;
+  width: 100px;
+}
+
+.orderListContainer .foto-info div {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-bottom: 4px;
+}
+
+.ui-fileupload-content.ui-widget-content {
+  overflow: auto;
+  height: 280px;
+}
+
+.ui-fileupload-row>div:nth-child(2) {
+  min-width: 280px;
 }

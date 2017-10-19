@@ -6,8 +6,8 @@
   margin-top: 20px;
 }
 
-.w50 {
-  width: 50px;
+.col-minimum {
+  width: 100px;
 }
 
 .buscador {
@@ -17,4 +17,8 @@
 
 .btn-big {
   padding: 10px;
+}
+
+.ui-datatable-data tr:hover {
+  background-color: rgb(219, 219, 219) !important;
 }

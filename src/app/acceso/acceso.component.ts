@@ -51,13 +51,13 @@ export class PasswordValidation {
             <div class="input-container">
               <span class="ui-float-label">
                 <input id="usuario" type="text" formControlName="nombre" autofocus pInputText>
-                <label for="usuario">Nombre de usuario</label>
+                <label for="usuario">Nombre del nuevo usuario</label>
               </span>
             </div>
             <div class="input-container">
               <span class="ui-float-label">
                 <input id="password" type="password" formControlName="password" pInputText>
-                <label for="password">Contraseña</label>
+                <label for="password">Nueva contraseña</label>
               </span>
             </div>
             <div class="input-container">

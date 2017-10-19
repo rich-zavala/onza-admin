@@ -10,7 +10,7 @@ export default class Inmueble {
   metros: number;
   banos: number;
   habitaciones: number;
-  foto_principal: string;
+  // foto_principal: string;
   fecha_registro: Date;
   fecha_update: Date;
   resumen: string;
@@ -29,7 +29,7 @@ export default class Inmueble {
     this.metros = o.metros || this.metros || '123456';
     this.banos = o.banos || this.banos || '123456';
     this.habitaciones = o.habitaciones || this.habitaciones || '123456';
-    this.foto_principal = o.foto_principal || this.foto_principal;
+    // this.foto_principal = o.foto_principal || this.foto_principal;
     this.fecha_registro = o.fecha_registro || this.fecha_registro;
     this.fecha_update = o.fecha_update || this.fecha_update;
     this.resumen = o.resumen || this.resumen || '123456';
@@ -45,5 +45,9 @@ export default class Inmueble {
 
   get fotos_count() {
     return this.fotos.length;
+  }
+
+  get foto_principal() {
+    return this.fotos[0];
   }
 }

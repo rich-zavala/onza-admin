@@ -67,6 +67,9 @@ export class InmueblesFormComponent {
   // Información del marcador del mapa
   mapMarcador = [];
 
+  // Destino de las imagenes
+  servidor = '';
+
   constructor(
     @Inject(FormBuilder) private fb: FormBuilder,
     private reqService: RequestService,
@@ -75,9 +78,11 @@ export class InmueblesFormComponent {
     private router: Router,
     private location: Location
   ) {
+
     route.params.subscribe(params => { // Obtener el ID del inmueble desde el URL
       this.id = params.id;
       if (this.id) { // Edición
+        this.servidor = this.reqService.getServidor() + 'upload/' + this.id + '.html';
         this.obtenerInmueble();
       } else { // Creación
         this.inmueble = new Inmueble({});
@@ -136,7 +141,7 @@ export class InmueblesFormComponent {
     });
 
     this.showSaveBtn();
-
+    this.setFotosUrl();
   }
 
   showSaveBtn() {
@@ -147,8 +152,7 @@ export class InmueblesFormComponent {
 
   guardar($event) {
     $event.stopPropagation();
-    this.save.pending = false;
-    this.save.working = true;
+    this.setBotonesWait();
 
     let success = (response) => {
       let registroNuevo = new Inmueble(response.valores);
@@ -164,6 +168,8 @@ export class InmueblesFormComponent {
         this.location.replaceState('/inmuebles_form/' + registroNuevo.id);
       }
 
+      this.inmueblesServicio.actualizarRegistro(this.inmueble);
+
       // Actualizar botones
       this.save.working = false;
       this.save.success = true;
@@ -173,7 +179,7 @@ export class InmueblesFormComponent {
     };
 
     let error = () => {
-      alert('Hay un puto error!');
+      alert('Ha ocurrido un error');
     };
 
     if (this.id) { // Actualizar
@@ -202,5 +208,56 @@ export class InmueblesFormComponent {
       center: { lat, lng },
       zoom: 17
     }
+  }
+
+  imagenesSubir() {
+    this.setBotonesWait();
+  }
+
+  imagenesSubidas($event) {
+    let imagenes = JSON.parse($event.xhr.response);
+    this.inmueble.fotos = _.map(imagenes.registros, (foto: any) => foto.archivo);
+    this.setFotosUrl();
+    this.showSaveBtn();
+    this.inmueblesServicio.actualizarRegistro(this.inmueble);
+  }
+
+  setFotosUrl() {
+    this.inmueble.fotos = _.map(this.inmueble.fotos, (foto: any) => {
+      let fotoName = foto.split(/(\\|\/)/g).pop();
+      return this.reqService.getServidorPrincipal() + 'fotos/' + this.id + '/' + fotoName;
+    });
+  }
+
+  eliminarFoto(foto) {
+    if (this.save.pending) {
+      this.setBotonesWait();
+      let data = {
+        id: this.id,
+        archivo: foto
+      };
+
+      let error = () => {
+        alert('Ha ocurrido un error');
+      };
+
+      let success = (res) => {
+        if (res.error === 0) {
+          _.remove(this.inmueble.fotos, infoto => infoto === foto);
+          this.showSaveBtn();
+        } else {
+          error();
+        }
+
+        this.inmueblesServicio.actualizarRegistro(this.inmueble);
+      };
+
+      this.reqService.eliminarFoto(data, success, error);
+    }
+  }
+
+  setBotonesWait() {
+    this.save.pending = false;
+    this.save.working = true;
   }
 }

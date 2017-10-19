@@ -13,28 +13,25 @@
   <i class="fa fa-fw fa-spin fa-spinner"></i> Cargando información...
 </div>
 
-<div class="ui-widget-header buscador" *ngIf="!cargando">
+<div class="ui-widget-header buscador" [hidden]="cargando">
   <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
-  <input #gb type="text" pInputText size="20">
+  <input #gb type="text" pInputText size="30">
 </div>
 
-<p-dataTable [value]="inmuebles" [rows]="15" [paginator]="true" [emptyMessage]="'No hay nada'" [globalFilter]="gb" #dt *ngIf="!cargando">
-  <p-column field="id" header="Folio" [sortable]="true" class="w50"></p-column>
+<p-dataTable [value]="inmuebles" [rows]="15" [paginator]="true" [emptyMessage]="'No hay nada'" [globalFilter]="gb" [hidden]="cargando">
+  <p-column field="id" header="Folio" [sortable]="true" styleClass="col-minimum text-right"></p-column>
   <p-column field="encabezado" header="Encabezado" [sortable]="true"></p-column>
-  <p-column field="ubicacion" header="Ubicación" [sortable]="true"></p-column>
-  <p-column field="fotos_count" header="Imágenes" [sortable]="true"></p-column>
+  <p-column field="ubicacion" header="Ubicación" [sortable]="true" styleClass="col-minimum"></p-column>
+  <p-column field="fotos_count" header="Imágenes" [sortable]="true" styleClass="col-minimum text-right"></p-column>
   <p-column field="fecha_registro" header="Fecha de registro" [sortable]="true"></p-column>
-  <p-column styleClass="col-button">
-    <ng-template pTemplate="header">
-      Acciones
-    </ng-template>
+  <p-column header="Acciones" styleClass="col-button col-minimum text-center">
     <ng-template let-inmueble="rowData" pTemplate="body">
-      <div class="text-center">
-        <button type="button" pButton icon="fa-pencil-square-o" routerLink="/inmuebles_form/{{inmueble.id}}"></button>
-        <button type="button" pButton icon="fa-trash-o" class="ui-button-danger" (click)="eliminar(inmueble)"></button>
-      </div>
+      <button type="button" pButton icon="fa-pencil-square-o" routerLink="/inmuebles_form/{{inmueble.id}}" title="Editar"></button>
+      <button type="button" pButton icon="fa-trash-o" class="ui-button-danger" (click)="eliminar(inmueble)" title="Eliminar"></button>
     </ng-template>
   </p-column>
 </p-dataTable>
 
 <div class="margin-b20"></div>
+
+<p-confirmDialog header="Eliminación de registro" acceptLabel="Eliminar" rejectLabel="Cancelar" icon="fa fa-question-circle" width="425" #cd> </p-confirmDialog>

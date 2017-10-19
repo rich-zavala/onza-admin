@@ -4,13 +4,13 @@
       <blockquote>Introduzca datos del inmueble</blockquote>
     </div>
     <div class="col-sm-3 text-right">
-      <button class="btn btn-primary btn-block" pTooltip="Guardar cambios" tooltipPosition="top" *ngIf="save.pending" [disabled]="form.invalid" type="submit">
+      <button class="btn btn-primary btn-block" pTooltip="Guardar cambios" tooltipPosition="top" *ngIf="save.pending && !save.success" [disabled]="form.invalid" type="submit">
         <i class="fa fa-fw fa-2x fa-save"></i>
       </button>
       <button class="btn btn-success btn-block" title="Cambios guardados exitosamente" *ngIf="save.success" type="button">
         <i class="fa fa-fw fa-2x fa-check"></i>
       </button>
-      <button class="btn btn-warning btn-block active" title="Guardando..." *ngIf="save.working">
+      <button class="btn btn-warning btn-block active" title="Guardando..." *ngIf="save.working && !save.success" type="button">
         <!--type="button" -->
         <i class="fa fa-fw fa-spinner fa-2x fa-pulse"></i>
       </button>
@@ -124,21 +124,23 @@
     </p-tabPanel>
     <p-tabPanel header="Imágenes" leftIcon="fa fa-fw fa-picture-o" *ngIf="inmueble.id">
       <div class="row">
-        <div class="col-md-8">
-          <h4 class="text-primary">Agrega fotos</h4>
-          <p-fileUpload name="myfile[]" url="./upload.php" multiple="multiple"></p-fileUpload>
+        <div class="col-md-6">
+          <h3>Paso 1: Agrega fotos</h3>
+          <p-fileUpload name="fotos[]" url="{{servidor}}" multiple="multiple" accept="image/jpeg" invalidFileTypeMessageSummary="{0}: Tipo de archivo no válido" invalidFileTypeMessageDetail="Tipos de archivos válidos: {0}" chooseLabel="Elegir" uploadLabel="Subir" cancelLabel="Cancelar" (onUpload)="imagenesSubidas($event)" (onBeforeUpload)="imagenesSubir()">
+          </p-fileUpload>
         </div>
-        <div class="col-md-4">
-          <h4 class="text-primary">Ordena las fotos</h4>
+        <div class="col-md-6" *ngIf="inmueble.fotos.length > 0">
+          <h3>Paso 2: Ordena las fotos que hayas subido</h3>
           <div class="orderListContainer">
-            <p-orderList [value]="imagenes" dragdrop="true" dragdropScope="imagenes">
+            <p-orderList [value]="inmueble.fotos" [responsive]="true" dragdrop="true">
               <ng-template let-imagen pTemplate="item">
                 <div class="ui-helper-clearfix">
                   <div class="foto-info">
-                    <div>{{imagen}}</div>
-                    <button pButton type="button" (click)="onclick()" label="Eliminar" icon="fa-trash"></button>
+                    <button pButton type="button" (click)="eliminarFoto(imagen)" label="Eliminar" icon="fa-trash"></button>
                   </div>
-                  <img src="assets/fotos/{{imagen}}">
+                  <div class="foto-img">
+                    <img src="{{imagen}}">
+                  </div>
                 </div>
               </ng-template>
             </p-orderList>

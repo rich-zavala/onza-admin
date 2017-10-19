@@ -4,7 +4,7 @@
       <blockquote>Introduzca datos del inmueble</blockquote>
     </div>
     <div class="col-sm-3 text-right">
-      <button class="btn btn-primary btn-block" pTooltip="Guardar cambios" tooltipPosition="top" *ngIf="save.pending && !save.success" [disabled]="form.invalid" type="submit">
+      <button class="btn btn-primary btn-block" pTooltip="Guardar cambios" tooltipPosition="top" *ngIf="save.pending && !save.success" [disabled]="form.invalid || save.disabled" type="submit">
         <i class="fa fa-fw fa-2x fa-save"></i>
       </button>
       <button class="btn btn-success btn-block" title="Cambios guardados exitosamente" *ngIf="save.success" type="button">
@@ -123,14 +123,17 @@
 
     </p-tabPanel>
     <p-tabPanel header="Imágenes" leftIcon="fa fa-fw fa-picture-o" *ngIf="inmueble.id">
-      <div class="row">
-        <div class="col-md-6">
+      <div class="ui-g">
+        <div class="ui-g-6 col-imagenes">
           <h3>Paso 1: Agrega fotos</h3>
-          <p-fileUpload name="fotos[]" url="{{servidor}}" multiple="multiple" accept="image/jpeg" invalidFileTypeMessageSummary="{0}: Tipo de archivo no válido" invalidFileTypeMessageDetail="Tipos de archivos válidos: {0}" chooseLabel="Elegir" uploadLabel="Subir" cancelLabel="Cancelar" (onUpload)="imagenesSubidas($event)" (onBeforeUpload)="imagenesSubir()">
+          <div class="text-muted sub-label">Imágenes JPG son aceptadas</div>
+          <p-fileUpload name="fotos[]" url="{{servidor}}" multiple="multiple" accept="image/jpeg" invalidFileTypeMessageSummary="{0}: Tipo de archivo no válido" invalidFileTypeMessageDetail="Tipos de archivos válidos: {0}" chooseLabel="Elegir" uploadLabel="Subir" cancelLabel="Cancelar" (onUpload)="imagenesSubidas($event)" (onBeforeUpload)="imagenesSubir()"
+            (onError)="imagenesError($event)">
           </p-fileUpload>
         </div>
-        <div class="col-md-6" *ngIf="inmueble.fotos.length > 0">
+        <div class="ui-g-6 col-imagenes" *ngIf="inmueble.fotos.length > 0">
           <h3>Paso 2: Ordena las fotos que hayas subido</h3>
+          <div class="text-muted sub-label">Presiona e botón de guardar cada vez que ordenes</div>
           <div class="orderListContainer">
             <p-orderList [value]="inmueble.fotos" [responsive]="true" dragdrop="true">
               <ng-template let-imagen pTemplate="item">

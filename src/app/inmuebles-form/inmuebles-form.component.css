@@ -2,8 +2,18 @@ h4 {
   margin-top: 0;
 }
 
+.ui-tabview .ui-tabview-panel {
+  border-width: 0;
+  padding: 1em 0;
+  background: 0;
+}
+
 p-dropdown .ui-dropdown {
   width: 200px !important;
+}
+
+.ui-orderlist.ui-orderlist-responsive .ui-orderlist-list-container {
+  width: 100%;
 }
 
 .ui-orderlist-controls {
@@ -68,4 +78,12 @@ p-dropdown .ui-dropdown {
 
 .ui-fileupload-row>div:nth-child(2) {
   min-width: 280px;
+}
+
+.col-imagenes h3 {
+  margin: 0;
+}
+
+.col-imagenes .sub-label {
+  margin-bottom: 10px;
 }

@@ -21,7 +21,9 @@ import {
   InputTextareaModule,
   FileUploadModule,
   OrderListModule,
-  GMapModule
+  GMapModule,
+  ConfirmDialogModule,
+  ConfirmationService
 } from 'primeng/primeng';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -103,13 +105,15 @@ import { MessageService } from 'primeng/components/common/messageservice';
     InputTextareaModule,
     FileUploadModule,
     OrderListModule,
-    GMapModule
+    GMapModule,
+    ConfirmDialogModule
   ],
   providers: [
     MessageService,
     SessionService,
     RequestService,
-    InmueblesService
+    InmueblesService,
+    ConfirmationService
   ],
   bootstrap: [AppComponent]
 })

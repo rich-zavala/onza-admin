@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { RequestService } from './request.service';
 import Inmueble from '../modelos/inmueble';
 import { Subject } from 'rxjs/Subject';
+import * as _ from 'lodash';
 
 @Injectable()
 export class InmueblesService {
@@ -45,5 +46,25 @@ export class InmueblesService {
   agregarRegistro(registro: Inmueble) {
     this.inmuebles.push(registro);
     this.inmuebles$.next(this.inmuebles);
+  }
+
+  actualizarRegistro(registro: Inmueble) {
+    let index = this.getRegistroIndex(registro);
+    if (index >= 0) {
+      this.inmuebles[index] = registro;
+    } else {
+      this.inmuebles.push(registro);
+    }
+    this.inmuebles$.next(this.inmuebles);
+  }
+
+  removerRegistro(registro: Inmueble) {
+    let index = this.getRegistroIndex(registro);
+    this.inmuebles.splice(index, 1);
+    this.inmuebles$.next(this.inmuebles);
+  }
+
+  getRegistroIndex(registro: Inmueble) {
+    return _.findIndex(this.inmuebles, r => r.id === registro.id);
   }
 }

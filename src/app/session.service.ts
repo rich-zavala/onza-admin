@@ -24,7 +24,7 @@ export class SessionService {
     let subject = this.http.get(this.servidor);
     let success = (res) => this.inicializarSesion();
     let error = (res) => this.finalizarSesion();
-    return this.request.httpRequest(subject, success, error);
+    // return this.request.httpRequest(subject, success, error);
   }
 
   inicializarSesion() {

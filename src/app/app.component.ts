@@ -35,6 +35,8 @@ export class AppComponent {
   secciones: Seccion[] = [
     new Seccion('inmuebles', 'fa-home', 'Inmuebles'),
     new Seccion('paginas/acerca_de', 'fa-building', 'Acerca de Nosotros'),
+    new Seccion('paginas/mision', 'fa-handshake-o', 'Mision'),
+    new Seccion('paginas/vision', 'fa-newspaper-o', 'Vision'),
     new Seccion('paginas/contacto', 'fa-phone', 'Contacto'),
     new Seccion('acceso', 'fa-user', 'Acceso'),
   ];

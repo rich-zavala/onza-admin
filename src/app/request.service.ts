@@ -7,6 +7,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import Inmueble from '../modelos/inmueble';
+import { SessionService } from './session.service';
 
 /**
  * Interfaz que indica el tipo de dato esperado de una página que será guardada
@@ -35,11 +36,11 @@ export class RequestService {
   private servidorPrincipal = 'http://192.168.0.20/onza/';
   private servidor = this.servidorPrincipal + 'admin/'; // URL del servidor
   private loginUrl = this.servidorPrincipal + 'acceso/login.html'; // URL del controlador de sesiones en el servidor
-  private paginasUrl = this.servidor + 'paginas.html'; // URL del controlador de páginas en el servidor
+  private paginasUrl = this.servidor + 'paginasInformativas.html'; // URL del controlador de páginas en el servidor
   private accesosUrl = this.servidor + 'accesos.html'; // URL del controlador de claves de acceso en el servidor
-  private inmueblesUrl = this.servidor + 'inmuebles.html'; // URL del controlador de claves de acceso en el servidor
+  private registrosUrl = this.servidor + 'registros.html'; // URL del controlador de claves de acceso en el servidor
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private session: SessionService) { }
 
   /**
    * Esta función es un auxiliar que ejecuta los callbacks.
@@ -48,6 +49,8 @@ export class RequestService {
   httpRequest(subject: Observable<Object>, success: Function, error: Function, complete?: Function) {
     subject.subscribe(
       (res: IServerResponse) => {
+        console.warn(this.session.sesionInicializada);
+
         switch (res.error) {
           case 0: // Se guardó correctamente
             if (typeof success === 'function') {
@@ -62,14 +65,12 @@ export class RequestService {
             break;
 
           case 2: // La sesión ha terminado
-            console.error('La sesión de usuario no es válida.');
-            if (typeof error === 'function') {
-              error(res);
-            }
+            alert('La sesión ha finalizado.\nAccede con tus claves e intenta nuevamente.');
+            this.session.finalizarSesion();
             break;
 
           default:
-            alert('Ha ocurrido un error. Intente de nuevo más tarde. 1');
+            alert('Ha ocurrido un error. Intente de nuevo más tarde.');
             if (typeof error === 'function') {
               error();
             }
@@ -125,17 +126,17 @@ export class RequestService {
    * Los parámetros son funciones a ejecutarse en cada caso (callbacks)
    */
   obtenerInmuebles(success: Function, error: Function) {
-    let subject = this.http.get(this.inmueblesUrl);
+    let subject = this.http.get(this.registrosUrl);
     return this.httpRequest(subject, success, error);
   }
 
   guardarInmueble(inmueble: Inmueble, success: Function, error: Function) {
-    let subject = this.http.put(this.inmueblesUrl, inmueble);
+    let subject = this.http.put(this.registrosUrl, inmueble);
     return this.httpRequest(subject, success, error);
   }
 
   registrarInmueble(inmueble: Inmueble, success: Function, error: Function) {
-    let subject = this.http.post(this.inmueblesUrl, inmueble);
+    let subject = this.http.post(this.registrosUrl, inmueble);
     return this.httpRequest(subject, success, error);
   }
 

@@ -50,8 +50,8 @@ export class PaginasComponent {
       this.originalValue = this.value;
       this.showSaveBtn();
     };
-    let error = () => alert('Ha ocurrido un error. Intente de nuevo más tarde.');
-    this.reqService.obtenerPaginas(success, error, () => null)
+    // let error = () => alert('Ha ocurrido un error. Intente de nuevo más tarde.');
+    this.reqService.obtenerPaginas(success, null);
   }
 
   guardar() {

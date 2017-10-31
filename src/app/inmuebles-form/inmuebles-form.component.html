@@ -130,11 +130,11 @@
             (onError)="imagenesError($event)">
           </p-fileUpload>
         </div>
-        <div class="ui-g-6 col-imagenes" *ngIf="inmueble.fotos.length > 0">
+        <div class="ui-g-6 col-imagenes" *ngIf="inmueble.miniaturas.length > 0">
           <h3>Paso 2: Ordena las fotos que hayas subido</h3>
           <div class="text-muted sub-label">Presiona e botón de guardar cada vez que ordenes</div>
           <div class="orderListContainer">
-            <p-orderList [value]="inmueble.fotos" [responsive]="true" dragdrop="true">
+            <p-orderList [value]="inmueble.miniaturas" [responsive]="true" dragdrop="true">
               <ng-template let-imagen pTemplate="item">
                 <div class="ui-helper-clearfix">
                   <div class="foto-info">

@@ -29,8 +29,8 @@ class Seccion {
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  verificandoSesion = false; // Cambiar
-  sesionInicializada = true; // Cambiar
+  verificandoSesion = true;
+  sesionInicializada = false;
 
   secciones: Seccion[] = [
     new Seccion('inmuebles', 'fa-home', 'Inmuebles'),
@@ -48,18 +48,15 @@ export class AppComponent {
     private route: ActivatedRoute,
     private router: Router
   ) {
-    // this.sesionInicializada = session.sesionInicializada;
-    // this.session.sesionControlador$.subscribe(estatusDeSesion => {
-    //   console.log('Status de la sesión', estatusDeSesion);
-    //   this.verificandoSesion = false;
-    //   this.sesionInicializada = estatusDeSesion;
-    // });
+    this.sesionInicializada = session.sesionInicializada;
+    session.sesionControlador$.subscribe(status => {
+      this.verificandoSesion = false;
+      this.sesionInicializada = status;
+    });
 
     router.events.subscribe((url: any) => {
       this.activarSeccion(router.url);
     });
-
-    session.verificarStorage();
   }
 
   activarSeccion(idSeccion) {
@@ -74,6 +71,6 @@ export class AppComponent {
   }
 
   logout() {
-    this.session.finalizarSesion();
+    this.session.cerrar();
   }
 }

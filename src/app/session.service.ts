@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
-import { RequestService } from './request.service';
+import { Observable } from 'rxjs/Observable';
+import { IServerResponse } from './request.service';
 
 const storageId = 'onzaToken';
 
@@ -11,20 +12,14 @@ export class SessionService {
   sesionInicializada = false;
   sesionControlador$: Subject<boolean> = new Subject();
 
-  constructor(private http: HttpClient, private request: RequestService) {
-    this.verificarStorage();
-  }
-
-  verificarStorage() {
+  constructor(private http: HttpClient) {
     this.verificarSesion();
   }
 
   verificarSesion() {
-
     let subject = this.http.get(this.servidor);
-    let success = (res) => this.inicializarSesion();
-    let error = (res) => this.finalizarSesion();
-    // return this.request.httpRequest(subject, success, error);
+    let success = res => this.inicializarSesion();
+    return this.httpRequest(subject, success);
   }
 
   inicializarSesion() {
@@ -32,10 +27,41 @@ export class SessionService {
     this.sesionControlador$.next(true);
   }
 
-  finalizarSesion() {
+  cerrar() {
     let subject = this.http.get(this.servidor + 'logout');
-    this.request.httpRequest(subject, null, null);
+    this.httpRequest(subject, null);
+    this.finalizarSesion();
+  }
+
+  finalizarSesion() {
     this.sesionInicializada = false;
     this.sesionControlador$.next(false);
+  }
+
+  httpRequest(subject: Observable<Object>, success: Function) {
+    subject.subscribe(
+      (res: IServerResponse) => {
+        switch (res.error) {
+          case 0: // Sesión iniciada
+            if (typeof success === 'function') {
+              success(res);
+            }
+            break;
+
+          case 1: // Nunca sucede
+            break;
+
+          case 2: // No hay sesión
+            this.sesionInicializada = false;
+            this.sesionControlador$.next(false);
+            break;
+
+          default:
+            alert('Ha ocurrido un error. Intente de nuevo más tarde.');
+        }
+      },
+      (res: IServerResponse) => {
+        alert('Ha ocurrido un error. Intente de nuevo más tarde.');
+      });
   }
 }

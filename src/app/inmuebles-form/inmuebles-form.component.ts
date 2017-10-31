@@ -185,14 +185,10 @@ export class InmueblesFormComponent {
       }, 2000);
     };
 
-    let error = () => {
-      alert('Ha ocurrido un error');
-    };
-
     if (this.id) { // Actualizar
-      this.reqService.guardarInmueble(this.inmueble, success, error);
+      this.reqService.guardarInmueble(this.inmueble, success, null);
     } else { // Crear
-      this.reqService.registrarInmueble(this.inmueble, success, error);
+      this.reqService.registrarInmueble(this.inmueble, success, null);
     }
   }
 
@@ -224,6 +220,7 @@ export class InmueblesFormComponent {
   imagenesSubidas($event) {
     let imagenes = JSON.parse($event.xhr.response);
     this.inmueble.fotos = _.map(imagenes.registros, (foto: any) => foto.archivo);
+    this.inmueble.miniaturas = _.map(imagenes.miniaturas, (foto: any) => foto.archivo);
     this.setFotosUrl();
     this.save.disabled = false;
     this.inmueblesServicio.actualizarRegistro(this.inmueble);
@@ -235,13 +232,20 @@ export class InmueblesFormComponent {
   }
 
   setFotosUrl() {
-    this.inmueble.fotos = _.map(this.inmueble.fotos, (foto: any) => {
-      let fotoName = foto.split(/(\\|\/)/g).pop();
-      return this.reqService.getServidorPrincipal() + 'fotos/' + this.id + '/' + fotoName;
-    });
+    let setUrl = foto => {
+      if (foto) {
+        let fotoName = foto.split(/(\\|\/)/g).pop();
+        return this.reqService.getServidorPrincipal() + 'fotos/' + this.id + '/' + fotoName;
+      }
+    };
+
+    this.inmueble.fotos = _.map(this.inmueble.fotos, setUrl);
+    this.inmueble.miniaturas = _.map(this.inmueble.miniaturas, setUrl);
   }
 
-  eliminarFoto(foto) {
+  eliminarFoto(thumb) {
+    let sufix = '_thumb';
+    let foto = thumb.split(sufix).join('');
     if (!this.save.disabled) {
       this.save.disabled = true;
       let data = {
@@ -257,6 +261,7 @@ export class InmueblesFormComponent {
       let success = (res) => {
         if (res.error === 0) {
           _.remove(this.inmueble.fotos, infoto => infoto === foto);
+          _.remove(this.inmueble.miniaturas, infoto => infoto === thumb);
           this.save.disabled = false;
         } else {
           error();

@@ -16,6 +16,7 @@ export default class Inmueble {
   resumen: string;
   coordenadas: string;
   fotos: string[];
+  miniaturas: string[];
 
   constructor(o: any) {
     this.id = o.id || this.id;
@@ -35,6 +36,7 @@ export default class Inmueble {
     this.resumen = o.resumen || this.resumen || '123456';
     this.coordenadas = o.coordenadas || this.coordenadas;
     this.fotos = o.fotos || [];
+    this.miniaturas = o.miniaturas || [];
     // this.fotos = [];
     // for (let i = 1; i < 8; i++) {
     //     this.fotos.push(`assets/images/${i}.jpg`);

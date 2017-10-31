@@ -33,7 +33,8 @@
     "environments": {
       "dev": "environments/environment.ts",
       "prod": "environments/environment.prod.ts"
-    }
+    },
+    "deployUrl": "/onza/js/admin/"
   }],
   "e2e": {
     "protractor": {

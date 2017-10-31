@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { RequestService } from './request.service';
+import { SessionService } from './session.service';
 import Inmueble from '../modelos/inmueble';
 import { Subject } from 'rxjs/Subject';
 import * as _ from 'lodash';
@@ -8,19 +9,31 @@ import * as _ from 'lodash';
 export class InmueblesService {
   inmuebles: Inmueble[];
   inmuebles$: Subject<Inmueble[]> = new Subject();
+  sesionInicializada = false;
 
-  constructor(private requestService: RequestService) {
+  constructor(private requestService: RequestService, private session: SessionService) {
+    this.sesionInicializada = session.sesionInicializada;
     this.cargarRegistros();
+
+    session.sesionControlador$.subscribe(status => {
+      if (status) {
+        this.cargarRegistros();
+      }
+    });
   }
 
   cargarRegistros() {
-    let success = registros => {
-      let inmuebles = registros.valores.map(registro => new Inmueble(registro));
-      this.inmuebles = inmuebles;
-      this.inmuebles$.next(this.inmuebles);
-    };
-    let error = () => alert('Ha ocurrido un error. Intente de nuevo más tarde.');
-    this.requestService.obtenerInmuebles(success, error);
+    if (this.sesionInicializada) {
+      let success = res => {
+        if (res.error === 0) {
+          let inmuebles = res.valores.map(registro => new Inmueble(registro));
+          this.inmuebles = inmuebles;
+          this.inmuebles$.next(this.inmuebles);
+        }
+      };
+      let error = () => alert('Ha ocurrido un error. Intente de nuevo más tarde.');
+      this.requestService.obtenerInmuebles(success, error);
+    }
   }
 
   getInmueble(id: string) {

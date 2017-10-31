@@ -23,26 +23,19 @@ export default class Inmueble {
     this.servicio = o.servicio || this.servicio || 'Venta';
     this.tipo = o.tipo || this.tipo || 'Casa';
     this.ubicacion = o.ubicacion || this.ubicacion || 'Norte';
-    this.direccion = o.direccion || this.direccion || '123456';
-    this.precio = o.precio || this.precio || '123456';
-    this.descripcion = o.descripcion || this.descripcion || '123456';
-    this.encabezado = o.encabezado || this.encabezado || '123456';
-    this.metros = o.metros || this.metros || '123456';
-    this.banos = o.banos || this.banos || '123456';
-    this.habitaciones = o.habitaciones || this.habitaciones || '123456';
-    // this.foto_principal = o.foto_principal || this.foto_principal;
+    this.direccion = o.direccion || this.direccion;
+    this.precio = o.precio || this.precio || '0';
+    this.descripcion = o.descripcion || this.descripcion;
+    this.encabezado = o.encabezado || this.encabezado;
+    this.metros = o.metros || this.metros || '0';
+    this.banos = o.banos || this.banos || '0';
+    this.habitaciones = o.habitaciones || this.habitaciones || '0';
     this.fecha_registro = o.fecha_registro || this.fecha_registro;
     this.fecha_update = o.fecha_update || this.fecha_update;
-    this.resumen = o.resumen || this.resumen || '123456';
+    this.resumen = o.resumen || this.resumen;
     this.coordenadas = o.coordenadas || this.coordenadas;
     this.fotos = o.fotos || [];
     this.miniaturas = o.miniaturas || [];
-    // this.fotos = [];
-    // for (let i = 1; i < 8; i++) {
-    //     this.fotos.push(`assets/images/${i}.jpg`);
-    //     this.fotos.push(`assets/images/${i}.jpg`);
-    //     this.fotos.push(`assets/images/${i}.jpg`);
-    // }
   }
 
   get fotos_count() {

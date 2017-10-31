@@ -49,8 +49,6 @@ export class RequestService {
   httpRequest(subject: Observable<Object>, success: Function, error: Function, complete?: Function) {
     subject.subscribe(
       (res: IServerResponse) => {
-        console.warn(this.session.sesionInicializada);
-
         switch (res.error) {
           case 0: // Se guardó correctamente
             if (typeof success === 'function') {
@@ -154,7 +152,7 @@ export class RequestService {
   }
 
   eliminarInmueble(inmueble: Inmueble, success: Function, error: Function) {
-    let subject = this.http.delete(this.servidor + 'inmuebles/' + inmueble.id + '.html');
+    let subject = this.http.delete(this.servidor + 'registros/' + inmueble.id + '.html');
     return this.httpRequest(subject, success, error);
   }
 }

@@ -66,19 +66,19 @@
         <div class="form-group" [ngClass]="{'has-error': form.controls.informacion.controls.metros.invalid}">
           <label for="metros" class="col-sm-2 control-label">M2 de la propiedad</label>
           <div class="col-sm-6">
-            <input type="text" class="form-control" id="metros" formControlName="metros" [(ngModel)]="inmueble.metros" />
+            <input type="number" class="form-control" id="metros" formControlName="metros" [(ngModel)]="inmueble.metros" />
           </div>
         </div>
         <div class="form-group" [ngClass]="{'has-error': form.controls.informacion.controls.habitaciones.invalid}">
           <label for="habitaciones" class="col-sm-2 control-label">Habitaciones</label>
           <div class="col-sm-6">
-            <input type="text" class="form-control" id="habitaciones" formControlName="habitaciones" [(ngModel)]="inmueble.habitaciones" />
+            <input type="number" class="form-control" id="habitaciones" formControlName="habitaciones" [(ngModel)]="inmueble.habitaciones" />
           </div>
         </div>
         <div class="form-group" [ngClass]="{'has-error': form.controls.informacion.controls.banos.invalid}">
           <label for="banos" class="col-sm-2 control-label">Baños</label>
           <div class="col-sm-6">
-            <input type="text" class="form-control" id="banos" formControlName="banos" [(ngModel)]="inmueble.banos" />
+            <input type="number" class="form-control" id="banos" formControlName="banos" [(ngModel)]="inmueble.banos" />
           </div>
         </div>
         <div class="form-group" [ngClass]="{'has-error': form.controls.informacion.controls.resumen.invalid}">
@@ -132,7 +132,7 @@
         </div>
         <div class="ui-g-6 col-imagenes" *ngIf="inmueble.miniaturas.length > 0">
           <h3>Paso 2: Ordena las fotos que hayas subido</h3>
-          <div class="text-muted sub-label">Presiona e botón de guardar cada vez que ordenes</div>
+          <div class="text-muted sub-label">Presiona el botón de guardar cada vez que ordenes</div>
           <div class="orderListContainer">
             <p-orderList [value]="inmueble.miniaturas" [responsive]="true" dragdrop="true">
               <ng-template let-imagen pTemplate="item">

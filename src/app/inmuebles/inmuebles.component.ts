@@ -48,11 +48,8 @@ export class InmueblesComponent {
           let success = (res) => {
             if (res.error === 0) {
               this.eliminando = false;
-            } else {
-              error();
+              this.inmueblesServicio.removerRegistro(inmueble);
             }
-
-            this.inmueblesServicio.removerRegistro(inmueble);
           };
 
           this.requestService.eliminarInmueble(inmueble, success, error);

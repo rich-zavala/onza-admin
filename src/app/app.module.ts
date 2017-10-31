@@ -75,10 +75,6 @@ import { MessageService } from 'primeng/components/common/messageservice';
         path: 'acceso',
         component: AccesoComponent
       },
-      // {
-      //   path: 'login',
-      //   component: LoginComponent
-      // },
       {
         path: '',
         pathMatch: 'full',

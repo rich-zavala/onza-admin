@@ -34,8 +34,8 @@
     </div>
   </nav>
 
-  <div *ngIf="sesionInicializada && seccionActual">
-    <h2>{{seccionActual.titulo}}</h2>
+  <div *ngIf="sesionInicializada">
+    <h2 *ngIf="seccionActual">{{seccionActual.titulo}}</h2>
     <router-outlet></router-outlet>
   </div>
 

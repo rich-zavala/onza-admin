@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { RequestService, IServerResponse } from '../request.service';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-paginas',
@@ -21,9 +22,9 @@ import { RequestService, IServerResponse } from '../request.service';
       </button>
     </div>
   </div>
-  <div class="row" *ngIf="value">
+  <div class="row" *ngIf="isReady">
     <div class="col-sm-12">
-      <p-editor [(ngModel)]="value" [style]="{'height':'320px'}" (onTextChange)="updateButtons()"></p-editor>
+      <p-editor [(ngModel)]="value" [style]="{'height':'320px'}" (onTextChange)="updateButtons($event)"></p-editor>
     </div>
   </div>
   `
@@ -37,7 +38,7 @@ export class PaginasComponent {
 
   constructor(private reqService: RequestService, private route: ActivatedRoute) {
     route.params.subscribe(params => {
-      this.value = null;
+      this.value = undefined;
       this.seccion = params.seccion;
       this.showSaveBtn();
       this.obtenerPaginas();
@@ -50,7 +51,6 @@ export class PaginasComponent {
       this.originalValue = this.value;
       this.showSaveBtn();
     };
-    // let error = () => alert('Ha ocurrido un error. Intente de nuevo más tarde.');
     this.reqService.obtenerPaginas(success, null);
   }
 
@@ -81,5 +81,9 @@ export class PaginasComponent {
     if (this.value !== this.originalValue) {
       this.noDelta = false;
     }
+  }
+
+  get isReady(): boolean {
+    return !_.isUndefined(this.value);
   }
 }

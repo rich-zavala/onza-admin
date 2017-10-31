@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SessionService } from './session.service';
+import * as _ from 'lodash';
 
 class Seccion {
   nombre: string;
@@ -60,14 +61,30 @@ export class AppComponent {
   }
 
   activarSeccion(idSeccion) {
+    let activado = false;
+    let pagina: string;
+    let parts = idSeccion.split('/');
+    if (parts[1] === 'paginas' && parts[2]) {
+      pagina = 'paginas/' + parts[2];
+    } else if (parts[1] === 'inmuebles_form') {
+      pagina = 'inmuebles';
+    } else {
+      pagina = parts[1];
+    }
+
     this.secciones.forEach(seccion => {
-      if (idSeccion.includes(seccion.nombre)) {
+      if (pagina === seccion.nombre) {
         seccion.activar();
         this.seccionActual = seccion;
+        activado = true;
       } else {
         seccion.desactivar();
       }
     });
+
+    if (!activado) {
+      this.seccionActual = undefined;
+    }
   }
 
   logout() {

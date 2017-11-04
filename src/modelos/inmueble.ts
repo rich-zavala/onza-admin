@@ -10,7 +10,6 @@ export default class Inmueble {
   metros: number;
   banos: number;
   habitaciones: number;
-  // foto_principal: string;
   fecha_registro: Date;
   fecha_update: Date;
   resumen: string;
@@ -43,6 +42,6 @@ export default class Inmueble {
   }
 
   get foto_principal() {
-    return this.fotos[0];
+    return this.miniaturas[0];
   }
 }

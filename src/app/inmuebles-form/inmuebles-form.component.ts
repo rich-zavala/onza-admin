@@ -34,6 +34,7 @@ export class InmueblesFormComponent {
   // Catálogos
   catalogos = {
     ubicaciones: [
+      { label: 'Centro', value: 'Centro' },
       { label: 'Norte', value: 'Norte' },
       { label: 'Sur', value: 'Sur' },
       { label: 'Este', value: 'Este' },
@@ -158,6 +159,19 @@ export class InmueblesFormComponent {
   guardar($event) {
     $event.stopPropagation();
     this.setBotonesWait();
+
+    /**
+     * El orden se establece en inmueble.miniaturas, pero la BDD almacena inmuebles.fotos
+     * Entonces hay que actualizar el orden de las fotos según el orden de las miniaturas
+     */
+    this.inmueble.fotos = this.inmueble.miniaturas.map(f => {
+      let base = f.substring(f.lastIndexOf('/') + 1);
+      if (base.lastIndexOf('.') !== -1) {
+        base = base.substring(0, base.lastIndexOf('.'));
+      }
+      return base.replace('_thumb', '') + '.' + 'jpg';
+    });
+
 
     let success = (response) => {
       let registroNuevo = new Inmueble(response.valores);

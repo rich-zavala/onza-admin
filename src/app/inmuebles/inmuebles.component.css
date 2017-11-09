@@ -6,10 +6,6 @@
   margin-top: 20px;
 }
 
-.col-minimum {
-  width: 100px;
-}
-
 .buscador {
   padding: 4px 10px;
   border-bottom: 0 none;
@@ -21,4 +17,33 @@
 
 .ui-datatable-data tr:hover {
   background-color: rgb(219, 219, 219) !important;
+}
+
+.folio {
+  width: 76px;
+}
+
+.encabezado {}
+
+.tipo,
+.precio,
+.fotos {
+  width: 82px;
+}
+
+.ubicacion {
+  width: 110px;
+}
+
+.habitaciones {
+  width: 130px;
+}
+
+.fecha {
+  width: 160px;
+}
+
+.acciones {
+  width: 100px;
+  text-align: center;
 }

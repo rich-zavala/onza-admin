@@ -19,12 +19,15 @@
 </div>
 
 <p-dataTable [value]="inmuebles" [rows]="15" [paginator]="true" [emptyMessage]="'No hay nada'" [globalFilter]="gb" [hidden]="cargando">
-  <p-column field="id" header="Folio" [sortable]="true" styleClass="col-minimum text-right"></p-column>
-  <p-column field="encabezado" header="Encabezado" [sortable]="true"></p-column>
-  <p-column field="ubicacion" header="Ubicación" [sortable]="true" styleClass="col-minimum"></p-column>
-  <p-column field="fotos_count" header="Imágenes" [sortable]="true" styleClass="col-minimum text-right"></p-column>
-  <p-column field="fecha_registro" header="Fecha de registro" [sortable]="true"></p-column>
-  <p-column header="Acciones" styleClass="col-button col-minimum text-center">
+  <p-column field="id" header="Folio" [sortable]="true" styleClass="folio"></p-column>
+  <p-column field="encabezado" header="Encabezado" [sortable]="true" styleClass="encabezado"></p-column>
+  <p-column field="tipo" header="Tipo" [sortable]="true" styleClass="tipo"></p-column>
+  <p-column field="precio" header="Precio" [filter]="false" [sortable]="true" styleClass="precio text-right"></p-column>
+  <p-column field="ubicacion" header="Ubicación" [filter]="false" [sortable]="true" styleClass="ubicacion"></p-column>
+  <p-column field="habitaciones" header="Habitaciones" [filter]="false" [sortable]="true" styleClass="habitaciones"></p-column>
+  <p-column field="fotos_count" header="Fotos" [filter]="false" [sortable]="true" styleClass="fotos"></p-column>
+  <p-column field="fecha_registro" header="Fecha de registro" [filter]="false" [sortable]="true" styleClass="fecha"></p-column>
+  <p-column header="Acciones" styleClass="acciones text-center">
     <ng-template let-inmueble="rowData" pTemplate="body">
       <button type="button" pButton icon="fa-pencil-square-o" routerLink="/inmuebles_form/{{inmueble.id}}" title="Editar"></button>
       <button type="button" pButton icon="fa-trash-o" class="ui-button-danger" (click)="eliminar(inmueble)" title="Eliminar"></button>

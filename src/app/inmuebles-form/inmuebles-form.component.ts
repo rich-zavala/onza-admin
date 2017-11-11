@@ -101,10 +101,12 @@ export class InmueblesFormComponent {
       this.inmueble = _.cloneDeep(inmuebleInfo.inmueble);
 
       // Poner coordenadas en el marcador
-      let coordenadas = this.inmueble.coordenadas.split(',');
-      let lat = parseFloat(coordenadas[0]);
-      let lng = parseFloat(coordenadas[1]);
-      this.establecerMarcador(lat, lng);
+      if (this.inmueble.coordenadas && this.inmueble.coordenadas !== '') {
+        let coordenadas = this.inmueble.coordenadas.split(',');
+        let lat = parseFloat(coordenadas[0]);
+        let lng = parseFloat(coordenadas[1]);
+        this.establecerMarcador(lat, lng);
+      }
       this.setReady();
     } else if (inmuebleInfo.error) {
       alert('El registro que estás buscando no se encuentra disponible.');
@@ -295,5 +297,10 @@ export class InmueblesFormComponent {
 
   setServidor() {
     this.servidor = this.reqService.getServidor() + 'upload/' + this.id + '.html';
+  }
+
+  removerMapa() {
+    this.inmueble.coordenadas = '';
+    this.mapMarcador = [];
   }
 }

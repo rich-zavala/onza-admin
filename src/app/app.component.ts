@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SessionService } from './session.service';
-import * as _ from 'lodash';
 
 class Seccion {
   nombre: string;

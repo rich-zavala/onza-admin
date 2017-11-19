@@ -5,7 +5,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import Inmueble from '../../modelos/inmueble';
 import { RequestService } from '../request.service';
 import { InmueblesService } from '../inmuebles.service';
-import * as _ from 'lodash';
+import { cloneDeep } from 'lodash';
+import { map } from 'lodash';
+import { remove } from 'lodash';
 
 declare var google: any;
 
@@ -98,7 +100,7 @@ export class InmueblesFormComponent {
   obtenerInmueble() {
     let inmuebleInfo = this.inmueblesServicio.getInmueble(this.id);
     if (inmuebleInfo.ready) {
-      this.inmueble = _.cloneDeep(inmuebleInfo.inmueble);
+      this.inmueble = cloneDeep(inmuebleInfo.inmueble);
 
       // Poner coordenadas en el marcador
       if (this.inmueble.coordenadas && this.inmueble.coordenadas !== '') {
@@ -235,8 +237,8 @@ export class InmueblesFormComponent {
 
   imagenesSubidas($event) {
     let imagenes = JSON.parse($event.xhr.response);
-    this.inmueble.fotos = _.map(imagenes.registros, (foto: any) => foto.archivo);
-    this.inmueble.miniaturas = _.map(imagenes.miniaturas, (foto: any) => foto.archivo);
+    this.inmueble.fotos = map(imagenes.registros, (foto: any) => foto.archivo);
+    this.inmueble.miniaturas = map(imagenes.miniaturas, (foto: any) => foto.archivo);
     this.setFotosUrl();
     this.save.disabled = false;
     this.inmueblesServicio.actualizarRegistro(this.inmueble);
@@ -255,8 +257,8 @@ export class InmueblesFormComponent {
       }
     };
 
-    this.inmueble.fotos = _.map(this.inmueble.fotos, setUrl);
-    this.inmueble.miniaturas = _.map(this.inmueble.miniaturas, setUrl);
+    this.inmueble.fotos = map(this.inmueble.fotos, setUrl);
+    this.inmueble.miniaturas = map(this.inmueble.miniaturas, setUrl);
   }
 
   eliminarFoto(thumb) {
@@ -276,8 +278,8 @@ export class InmueblesFormComponent {
 
       let success = (res) => {
         if (res.error === 0) {
-          _.remove(this.inmueble.fotos, infoto => infoto === foto);
-          _.remove(this.inmueble.miniaturas, infoto => infoto === thumb);
+          remove(this.inmueble.fotos, infoto => infoto === foto);
+          remove(this.inmueble.miniaturas, infoto => infoto === thumb);
           this.save.disabled = false;
         } else {
           error();

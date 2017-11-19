@@ -3,7 +3,7 @@ import { RequestService } from './request.service';
 import { SessionService } from './session.service';
 import Inmueble from '../modelos/inmueble';
 import { Subject } from 'rxjs/Subject';
-import * as _ from 'lodash';
+import { findIndex } from 'lodash';
 
 @Injectable()
 export class InmueblesService {
@@ -78,6 +78,6 @@ export class InmueblesService {
   }
 
   getRegistroIndex(registro: Inmueble) {
-    return _.findIndex(this.inmuebles, r => r.id === registro.id);
+    return findIndex(this.inmuebles, r => r.id === registro.id);
   }
 }

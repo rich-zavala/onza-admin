@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { RequestService, IServerResponse } from '../request.service';
-import * as _ from 'lodash';
+import { isUndefined } from 'lodash';
 
 @Component({
   selector: 'app-paginas',
@@ -84,6 +84,6 @@ export class PaginasComponent {
   }
 
   get isReady(): boolean {
-    return !_.isUndefined(this.value);
+    return !isUndefined(this.value);
   }
 }

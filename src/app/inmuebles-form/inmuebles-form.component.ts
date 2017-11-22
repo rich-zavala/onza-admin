@@ -145,7 +145,7 @@ export class InmueblesFormComponent {
       }),
       ubicacion: this.fb.group({
         ubicacion: [this.inmueble.ubicacion, [Validators.required]],
-        direccion: [this.inmueble.direccion, [Validators, Validators.minLength(4)]]
+        direccion: [this.inmueble.direccion, [Validators.minLength(4)]]
       })
     });
 

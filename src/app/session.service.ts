@@ -4,11 +4,12 @@ import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
 import { IServerResponse } from './request.service';
 
+export const servidorPrincipal = 'http://www.onzainmobiliaria.com/';
 const storageId = 'onzaToken';
 
 @Injectable()
 export class SessionService {
-  private servidor = 'http://192.168.0.20/onza/acceso/';
+  private servidor = servidorPrincipal + 'acceso/';
   sesionInicializada = false;
   sesionControlador$: Subject<boolean> = new Subject();
 

@@ -7,7 +7,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import Inmueble from '../modelos/inmueble';
-import { SessionService } from './session.service';
+import { SessionService, servidorPrincipal } from './session.service';
 
 /**
  * Interfaz que indica el tipo de dato esperado de una página que será guardada
@@ -33,9 +33,9 @@ export interface IServerResponse {
 
 @Injectable()
 export class RequestService {
-  private servidorPrincipal = 'http://192.168.0.20/onza/';
-  private servidor = this.servidorPrincipal + 'admin/'; // URL del servidor
-  private loginUrl = this.servidorPrincipal + 'acceso/login.html'; // URL del controlador de sesiones en el servidor
+  // private servidorPrincipal = 'http://www.onzainmobiliaria.com/';
+  private servidor = servidorPrincipal + 'admin/'; // URL del servidor
+  private loginUrl = servidorPrincipal + 'acceso/login.html'; // URL del controlador de sesiones en el servidor
   private paginasUrl = this.servidor + 'paginasInformativas.html'; // URL del controlador de páginas en el servidor
   private accesosUrl = this.servidor + 'accesos.html'; // URL del controlador de claves de acceso en el servidor
   private registrosUrl = this.servidor + 'registros.html'; // URL del controlador de claves de acceso en el servidor
@@ -139,7 +139,7 @@ export class RequestService {
   }
 
   getServidorPrincipal() {
-    return this.servidorPrincipal;
+    return servidorPrincipal;
   }
 
   getServidor() {

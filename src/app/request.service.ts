@@ -33,7 +33,6 @@ export interface IServerResponse {
 
 @Injectable()
 export class RequestService {
-  // private servidorPrincipal = 'http://www.onzainmobiliaria.com/';
   private servidor = servidorPrincipal + 'admin/'; // URL del servidor
   private loginUrl = servidorPrincipal + 'acceso/login.html'; // URL del controlador de sesiones en el servidor
   private paginasUrl = this.servidor + 'paginasInformativas.html'; // URL del controlador de páginas en el servidor

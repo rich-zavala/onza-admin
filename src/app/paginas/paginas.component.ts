@@ -1,3 +1,4 @@
+// tslint:disable:max-line-length
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { RequestService, IServerResponse } from '../request.service';
@@ -22,12 +23,15 @@ import { isUndefined } from 'lodash';
       </button>
     </div>
   </div>
-  <div class="row" *ngIf="isReady">
-    <div class="col-sm-12">
-      <p-editor [(ngModel)]="value" [style]="{'height':'320px'}" (onTextChange)="updateButtons($event)"></p-editor>
+  <ng-container *ngIf="isReady">
+    <div class="editor">
+      <p-editor [(ngModel)]="value" [style]="{ height:'320px', background: 'linear-gradient(to bottom right, rgb(54, 54, 56), rgb(58, 59, 61) , rgb(103, 103, 105), rgba(156, 157, 161, 0.637), rgb(110, 110, 116), rgb(62, 63, 66))' }" (onTextChange)="updateButtons($event)"></p-editor>
     </div>
-  </div>
-  `
+  </ng-container>
+  `,
+  styles: [
+    `.editor { width: 700px }`
+  ]
 })
 export class PaginasComponent {
   seccion: string;

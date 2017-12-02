@@ -5,8 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import { IServerResponse } from './request.service';
 
 export const servidorPrincipal = 'http://www.onzainmobiliaria.com/';
-// export const servidorPrincipal = 'http://192.168.0.20/onza/';
-const storageId = 'onzaToken';
+// export const servidorPrincipal = 'http://onza/';
 
 @Injectable()
 export class SessionService {
